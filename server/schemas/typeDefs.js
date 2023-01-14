@@ -8,6 +8,8 @@ const typeDefs = gql`
     password: String
     isAuthenticated: Boolean
     announcements: [Announcement]
+    createdLeagues: [League]
+    createdTeamMembers: [TeamMember]
   }
   type Announcement {
     _id: ID
@@ -51,6 +53,8 @@ const typeDefs = gql`
     createAnnouncement(announcementBody: String!): Announcement
     updateAnnouncement(_id: ID!, announcementBody: String!): Announcement
     createLeague(leagueName: String!): League
+    updateLeague(leagueName: String!): League
+    deleteLeague: League
     createTeamMembers(
       firstName: String!
       lastName: String!
@@ -66,6 +70,7 @@ const typeDefs = gql`
       playerPosition: String!
       playerLeague: String!
     ): TeamMember
+    deleteTeamMember: TeamMember
   }
 `;
 
