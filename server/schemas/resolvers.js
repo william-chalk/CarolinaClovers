@@ -93,7 +93,7 @@ const resolvers = {
 
       const token = signToken(admin);
 
-      return { token, user };
+      return { token, admin };
     },
     createAnnouncement: async (parent, args, context) => {
       if (context.admin) {

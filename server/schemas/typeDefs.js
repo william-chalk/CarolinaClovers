@@ -14,7 +14,7 @@ const typeDefs = gql`
   type Announcement {
     _id: ID
     announcementBody: String
-    createdAt: Date
+    createdAt: String
   }
   type League {
     _id: ID
@@ -26,7 +26,7 @@ const typeDefs = gql`
     _id: ID
     firstName: String
     lastName: String
-    playerNumber: Number
+    playerNumber: Int
     playerPosition: String
     playerLeague: League
   }
@@ -58,7 +58,7 @@ const typeDefs = gql`
     createTeamMembers(
       firstName: String!
       lastName: String!
-      playerNumber: Number!
+      playerNumber: Int!
       playerPosition: String!
       playerLeague: String!
     ): TeamMember
@@ -66,7 +66,7 @@ const typeDefs = gql`
       _id: ID!
       firstName: String!
       lastName: String!
-      playerNumber: Number!
+      playerNumber: Int!
       playerPosition: String!
       playerLeague: String!
     ): TeamMember
