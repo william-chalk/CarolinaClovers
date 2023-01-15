@@ -84,6 +84,7 @@ const resolvers = {
       }
 
       const correctPw = await admin.isCorrectPassword(password);
+      console.log(correctPw);
 
       if (!correctPw) {
         throw new AuthenticationError("Incorrect credentials");
