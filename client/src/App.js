@@ -10,6 +10,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { CookiesProvider } from "react-cookie";
 
 import MainNav from "./components/MainNav";
+import HomePage from "./pages/HomePage";
+import Admin from "./pages/Admin";
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -36,6 +38,8 @@ function App() {
       <CookiesProvider>
         <Router>
           <MainNav />
+          <HomePage/>
+          <Admin/>
         </Router>
       </CookiesProvider>
     </ApolloProvider>

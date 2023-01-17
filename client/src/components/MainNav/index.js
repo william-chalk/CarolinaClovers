@@ -52,6 +52,36 @@ function MainNav() {
             <option value="Team Four">Team Four</option>
             <option value="Team Five">Team Five</option>
           </select>
+          <select>
+            <option disabled selected>
+              Tournament Sites
+            </option>
+            <option value="Team One">Team One</option>
+            <option value="Team Two">Team Two</option>
+            <option value="Team Three">Team Three</option>
+            <option value="Team Four">Team Four</option>
+            <option value="Team Five">Team Five</option>
+          </select>
+          <select>
+            <option disabled selected>
+              Schedules
+            </option>
+            <option value="Team One">Team One</option>
+            <option value="Team Two">Team Two</option>
+            <option value="Team Three">Team Three</option>
+            <option value="Team Four">Team Four</option>
+            <option value="Team Five">Team Five</option>
+          </select>
+          <select>
+            <option disabled selected>
+              Sponser Us
+            </option>
+            <option value="Team One">Team One</option>
+            <option value="Team Two">Team Two</option>
+            <option value="Team Three">Team Three</option>
+            <option value="Team Four">Team Four</option>
+            <option value="Team Five">Team Five</option>
+          </select>
         </div>
       </nav>
     </header>
