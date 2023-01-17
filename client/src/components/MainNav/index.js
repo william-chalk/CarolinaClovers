@@ -1,3 +1,12 @@
+//About us
+//Parent/Coach Resources
+//Team Pages
+//Tournament Sites
+//FanZone Store
+//Schedules
+//Donate
+//Sponser
+
 import React from "react";
 import { Link } from "react-router-dom";
 
