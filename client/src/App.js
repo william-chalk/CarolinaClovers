@@ -20,6 +20,7 @@ import Saftey from "./pages/Saftey";
 import OurVision from './pages/OurVision';
 import HeadCoaches from "./pages/HeadCoaches";
 import Admin from "./pages/Admin";
+import LoginForm from "./components/LoginForm";
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -59,6 +60,7 @@ function App() {
           <Route path="/contact-us" element={<ContactUs/>}/>
           <Route path="/head-coaches" element={<HeadCoaches/>}/>
           <Route path="/admin" element={<Admin/>}/>
+          <Route path="/login" element={<LoginForm/>}/>
           </Routes>
           </div>
           </div>

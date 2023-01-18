@@ -1,7 +1,5 @@
 import React from "react";
-import Container from "react-bootstrap/Container";
-import Form from "react-bootstrap/Form";
-import { Link } from "react-router-dom";
+import {Container,Form,Button} from "react-bootstrap";
 
 
 import Auth from "../context/auth";
@@ -10,6 +8,7 @@ function Admin(){
 
     return(
         <div>
+            {Auth.loggedIn() ? (
             <Container>
                 <>
                 <h2>Add Announcement</h2>
@@ -26,7 +25,7 @@ function Admin(){
                         <Form.Label>Add Image</Form.Label>
                         <Form.Control type="file" multiple/>
                     </Form.Group>
-                    <button type="submit" className="btn" >Add Announcement</button>
+                    <Button type="submit" variant="success" >Add Announcement</Button>
                 </Form>
                 </>
                 <>
@@ -36,7 +35,7 @@ function Admin(){
                         <Form.Label>League Name</Form.Label>
                         <Form.Control type="text" placeholder="League Name"/>
                     </Form.Group>
-                    <button type="submit" className="btn">Add League</button>
+                    <Button type="submit" variant="success">Add League</Button>
                 </Form>
                 </>
                 <>
@@ -61,6 +60,11 @@ function Admin(){
                 </Form>
                 </>
             </Container>
+            ) : (
+                <div>
+                    You need Admin access to view this page!
+                </div>
+            )}
         </div>
     )
 }
