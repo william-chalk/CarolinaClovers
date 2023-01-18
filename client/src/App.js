@@ -8,6 +8,7 @@ import {
 import { setContext } from "@apollo/client/link/context";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { CookiesProvider } from "react-cookie";
+import Container from "react-bootstrap/Container";
 
 import MainNav from "./components/MainNav";
 import HomePage from "./pages/HomePage";
@@ -43,6 +44,7 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <CookiesProvider>
+        <Container>
         <Router>
           <div>
           <MainNav />
@@ -56,10 +58,12 @@ function App() {
           <Route path="/saftey" element={<Saftey/>}/>
           <Route path="/contact-us" element={<ContactUs/>}/>
           <Route path="/head-coaches" element={<HeadCoaches/>}/>
+          <Route path="/admin" element={<Admin/>}/>
           </Routes>
           </div>
           </div>
         </Router>
+        </Container>
       </CookiesProvider>
     </ApolloProvider>
   );
