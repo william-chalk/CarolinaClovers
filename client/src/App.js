@@ -14,6 +14,10 @@ import HomePage from "./pages/HomePage";
 import SponsorUs from "./pages/SponsorPage";
 import OurPurpose from "./pages/OurPurpose";
 import MessageToParents from "./pages/MessageToParents";
+import ContactUs from "./pages/ContactUs";
+import Saftey from "./pages/Saftey";
+import OurVision from './pages/OurVision';
+import HeadCoaches from "./pages/HeadCoaches";
 import Admin from "./pages/Admin";
 
 const httpLink = createHttpLink({
@@ -48,6 +52,10 @@ function App() {
           <Route path="/sponsor" element={<SponsorUs/>}/>
           <Route path="/our-purpose" element={<OurPurpose/>}/>
           <Route path="/message-to-parents" element={<MessageToParents/>}/>
+          <Route path="/our-vision" element={<OurVision/>}/>
+          <Route path="/saftey" element={<Saftey/>}/>
+          <Route path="/contact-us" element={<ContactUs/>}/>
+          <Route path="/head-coaches" element={<HeadCoaches/>}/>
           </Routes>
           </div>
           </div>
