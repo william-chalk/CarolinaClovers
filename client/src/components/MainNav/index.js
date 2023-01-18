@@ -34,9 +34,9 @@ function MainNav() {
           </Dropdown.Toggle>
 
           <Dropdown.Menu>
-            <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-            <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-            <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+            <Dropdown.Item><Link to="/sponsor">Sponsor</Link></Dropdown.Item>
+            <Dropdown.Item><Link to="/our-purpose">Our Purpose</Link></Dropdown.Item>
+            <Dropdown.Item><Link to="/message-to-parents">Message To Our Parents</Link></Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
         </>

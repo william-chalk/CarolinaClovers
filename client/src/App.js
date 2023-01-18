@@ -11,6 +11,9 @@ import { CookiesProvider } from "react-cookie";
 
 import MainNav from "./components/MainNav";
 import HomePage from "./pages/HomePage";
+import SponsorUs from "./pages/SponsorPage";
+import OurPurpose from "./pages/OurPurpose";
+import MessageToParents from "./pages/MessageToParents";
 import Admin from "./pages/Admin";
 
 const httpLink = createHttpLink({
@@ -37,9 +40,17 @@ function App() {
     <ApolloProvider client={client}>
       <CookiesProvider>
         <Router>
+          <div>
           <MainNav />
-          <HomePage/>
-          <Admin/>
+          <div>
+          <Routes>
+          <Route path="/" element={<HomePage/>}/>
+          <Route path="/sponsor" element={<SponsorUs/>}/>
+          <Route path="/our-purpose" element={<OurPurpose/>}/>
+          <Route path="/message-to-parents" element={<MessageToParents/>}/>
+          </Routes>
+          </div>
+          </div>
         </Router>
       </CookiesProvider>
     </ApolloProvider>
