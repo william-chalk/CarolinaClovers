@@ -24,48 +24,48 @@ function MainNav() {
       <nav className="navbar">
         <>
           <Dropdown>
-            <Dropdown.Toggle variant="success" id="dropdown-basic">
+            <Dropdown.Toggle style={{color:"gold"}} variant="success" id="dropdown-basic">
               About Us
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
               <Dropdown.Item>
-                <Link to="/our-vision">Our Vision</Link>
+                <Link style={{textDecoration:"none",color:"green",fontWeight:"800",WebkitTextStroke:"1.2px black",letterSpacing:"2px"}} to="/our-vision">Our Vision</Link>
               </Dropdown.Item>
               <Dropdown.Item>
-                <Link to="/our-purpose">Our Purpose</Link>
+                <Link style={{textDecoration:"none",color:"green",fontWeight:"800",WebkitTextStroke:"1.2px black",letterSpacing:"2px"}} to="/our-purpose">Our Purpose</Link>
               </Dropdown.Item>
               <Dropdown.Item>
-                <Link to="/message-to-parents">Message To Our Parents</Link>
+                <Link style={{textDecoration:"none",color:"green",fontWeight:"800",WebkitTextStroke:"1.2px black",letterSpacing:"2px"}} to="/message-to-parents">Message To Our Parents</Link>
               </Dropdown.Item>
               <Dropdown.Item>
-                <Link to="/saftey">Our Saftey Policy</Link>
+                <Link style={{textDecoration:"none",color:"green",fontWeight:"800",WebkitTextStroke:"1.2px black",letterSpacing:"2px"}} to="/saftey">Our Saftey Policy</Link>
               </Dropdown.Item>
               <Dropdown.Item>
-                <Link to="/contact-us">Contact Us</Link>
+                <Link style={{textDecoration:"none",color:"green",fontWeight:"800",WebkitTextStroke:"1.2px black",letterSpacing:"2px"}} to="/contact-us">Contact Us</Link>
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </>
         <>
           <Dropdown>
-            <Dropdown.Toggle variant="success" id="dropdown-basic">
+            <Dropdown.Toggle style={{color:"gold"}} variant="success" id="dropdown-basic">
               Team Pages
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
               <Dropdown.Item>
-                <Link to="/head-coaches">Our Head Coaches</Link>
+                <Link style={{textDecoration:"none",color:"green",fontWeight:"800",WebkitTextStroke:"1.2px black",letterSpacing:"2px"}} to="/head-coaches">Our Head Coaches</Link>
               </Dropdown.Item>
               <Dropdown.Item>
-                <Link to="/leagues">Our Leagues</Link>
+                <Link style={{textDecoration:"none",color:"green",fontWeight:"800",WebkitTextStroke:"1.2px black",letterSpacing:"2px"}} to="/leagues">Our Leagues</Link>
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </>
         <>
           <Dropdown>
-            <Dropdown.Toggle variant="success" id="dropdown-basic">
+            <Dropdown.Toggle style={{color:"gold"}} variant="success" id="dropdown-basic">
               Schedules
             </Dropdown.Toggle>
 

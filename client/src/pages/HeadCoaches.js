@@ -2,7 +2,7 @@ import React from "react";
 
 function HeadCoaches() {
   return (
-    <div className="form-background">
+    <div style={{backgroundColor:"rgba(255,255,255,0.9)",height:"auto"}}>
       <h3>Our Head Coaches</h3>
     </div>
   );

@@ -33,10 +33,11 @@ function Admin() {
   };
 
   return (
-    <div className="form-background">
+    <div style={{backgroundColor:"rgba(255,255,255,0.9)",height:"100%"}}>
       {Auth.loggedIn() ? (
         <Container>
           <>
+            <h1>Welcome to the Admin Panel</h1>
             <h2>Add Announcement</h2>
             <Form>
               <Form.Group className="mb-3" controlId="announcementTitle">
