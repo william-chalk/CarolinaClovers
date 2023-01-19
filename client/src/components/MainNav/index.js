@@ -30,13 +30,37 @@ function MainNav() {
         <>
         <Dropdown>
           <Dropdown.Toggle variant="success" id="dropdown-basic">
-            Dropdown Button
+            About Us
           </Dropdown.Toggle>
 
           <Dropdown.Menu>
-            <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-            <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-            <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+            <Dropdown.Item><Link to="/our-vision">Our Vision</Link></Dropdown.Item>
+            <Dropdown.Item><Link to="/our-purpose">Our Purpose</Link></Dropdown.Item>
+            <Dropdown.Item><Link to="/message-to-parents">Message To Our Parents</Link></Dropdown.Item>
+            <Dropdown.Item><Link to="/saftey">Our Saftey Policy</Link></Dropdown.Item>
+            <Dropdown.Item><Link to="/contact-us">Contact Us</Link></Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
+        </>
+        <>
+        <Dropdown>
+          <Dropdown.Toggle variant="success" id="dropdown-basic">
+            Team Pages
+          </Dropdown.Toggle>
+
+          <Dropdown.Menu>
+            <Dropdown.Item><Link to="/head-coaches">Our Head Coaches</Link></Dropdown.Item>
+            <Dropdown.Item><Link to="/leagues">Our Leagues</Link></Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
+        </>
+        <>
+        <Dropdown>
+          <Dropdown.Toggle variant="success" id="dropdown-basic">
+            Schedules
+          </Dropdown.Toggle>
+
+          <Dropdown.Menu>
           </Dropdown.Menu>
         </Dropdown>
         </>
