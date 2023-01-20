@@ -29,3 +29,7 @@ code {
   font-weight: 700;
   -webkit-text-stroke: 2px black;
 }
+
+@media (max-width: 975px) {
+  /* once screen res is below 975 look like this */
+}
