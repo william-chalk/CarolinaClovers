@@ -9,7 +9,7 @@ import React from "react";
 
 function HomePage() {
   return (
-    <div style={{backgroundColor:"rgba(255,255,255,0.9)",height:"100vh"}}>
+    <div style={{backgroundColor:"rgba(255,255,255,0.9)",height:"50vh"}}>
       <div
         id="carouselExampleSlidesOnly"
         className="carousel slide"

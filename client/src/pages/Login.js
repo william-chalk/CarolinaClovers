@@ -1,9 +1,9 @@
 import React,{useState} from "react";
 import {Form,Button,Alert} from "react-bootstrap";
 import { useMutation } from "@apollo/client";
-import { LOGIN_USER } from "../../graphql/mutations";
+import { LOGIN_USER } from "../graphql/mutations";
 
-import Auth from "../../context/auth";
+import Auth from "../context/auth";
 
 const LoginForm = (props) =>{
     const [formState,setFormState] = useState({email:"",password:""});
@@ -27,6 +27,7 @@ const LoginForm = (props) =>{
             });
 
             Auth.login(data.login.token);
+            console.log(data.user.role);
         }
         catch(e){
             console.error(e)
@@ -36,6 +37,7 @@ const LoginForm = (props) =>{
             email:"",
             password:""
         });
+
     };
 
     return(
@@ -64,11 +66,11 @@ const LoginForm = (props) =>{
                   onChange={handleChange}
                 />
                 <Button variant="success" className="btn d-block w-100" type="submit">
-                  Submit
+                  Login
                 </Button>
               </Form>
   
-              {error && <div>Login failed</div>}
+              {error && <Alert variant="danger">Login failed</Alert>}
             </div>
           </div>
         </div>

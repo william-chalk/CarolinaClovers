@@ -23,7 +23,9 @@ import Saftey from "./pages/Saftey";
 import OurVision from "./pages/OurVision";
 import HeadCoaches from "./pages/HeadCoaches";
 import Admin from "./pages/Admin";
-import LoginForm from "./components/LoginForm";
+import LoginForm from "./pages/Login";
+import Signup from "./pages/Signup";
+import LeaguePage from './pages/LeaguePage';
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -68,10 +70,13 @@ function App() {
                     path="/message-to-parents"
                     element={<MessageToParents />}
                   />
+                  <Route path="/login" element={<LoginForm/>}/>
+                  <Route path="/signup" element={<Signup/>}/>
                   <Route path="/our-vision" element={<OurVision />} />
                   <Route path="/saftey" element={<Saftey />} />
                   <Route path="/contact-us" element={<ContactUs />} />
                   <Route path="/head-coaches" element={<HeadCoaches />} />
+                  <Route path="/leagues" element={<LeaguePage/>}/>
                   <Route path="/admin" element={<Admin />} />
                   <Route path="/login" element={<LoginForm />} />
                 </Routes>

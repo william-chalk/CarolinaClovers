@@ -1,7 +1,46 @@
 import { gql } from "@apollo/client";
 
+export const QUERY_USER = gql`
+query getUsers{
+    getUsers{
+        _id
+        username
+        email
+        role
+        announcements{
+            _id
+            announcementTitle
+            announcementBody
+            createdAt
+        }
+        createdLeagues{
+            _id
+            leagueName
+            leaguePlayers{
+                _id
+                firstName
+                lastName
+                playerNumber
+                playerPosition
+            }
+        }
+        createdTeamMembers{
+            _id
+            firstName
+            lastName
+            playerNumber
+            playerPosition
+            playerLeague{
+                _id
+                leagueName
+            }
+        }
+    }
+}
+`
+
 export const QUERY_PLAYERS = gql`
-query getPlayers($firstName:String,lastName:String){
+query getPlayers($firstName:String,$lastName:String){
     getPlayers(firstName:$firstName,lastName:$lastName){
         _id
         firstName
@@ -47,6 +86,22 @@ query getAnnouncementById($_id:ID!){
         _id
         announcementBody
         createdAt
+    }
+}
+`
+
+export const QUERY_LEAGUES = gql`
+query getLeagues{
+    getLeagues{
+        _id
+        leagueName
+        leaguePlayers{
+            _id
+            firstName
+            lastName
+            playerNumber
+            playerPosition
+        }
     }
 }
 `
