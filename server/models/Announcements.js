@@ -1,6 +1,11 @@
 const { Schema, model } = require("mongoose");
 
 const announcementSchema = new Schema({
+  announcementTitle:{
+    type:String,
+    required:true,
+    maxLength:200
+  },
   announcementBody: {
     type: String,
     required: true,

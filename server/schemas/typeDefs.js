@@ -1,11 +1,12 @@
 const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
-  type Admin {
+  type User {
     _id: ID
     username: String
     email: String
     password: String
+    role:String
     isAuthenticated: Boolean
     announcements: [Announcement]
     createdLeagues: [League]
@@ -13,6 +14,7 @@ const typeDefs = gql`
   }
   type Announcement {
     _id: ID
+    announcementTitle:String
     announcementBody: String
     createdAt: String
   }
@@ -33,25 +35,26 @@ const typeDefs = gql`
 
   type Auth {
     token: ID!
-    admin: Admin
+    user: User
   }
 
   type Query {
     getLeagueById(_id: ID!): League
+    getLeagues:[League]
     getPlayersByLeague(leagueName: String!): [TeamMember]
     getPlayers(firstName:String,lastName:String): [TeamMember]
-    getAdmins: [Admin]
+    getUsers: [User]
     getAnnouncements: [Announcement]
     getAnnouncementById(_id: ID!): Announcement
   }
 
   type Mutation {
-    createAdmin(username: String!, email: String!, password: String!): Auth
-    updateAdmin(username: String!, email: String!, password: String!): Admin
-    deleteAdmin: Admin
+    createUser(username: String!, email: String!, password: String!): Auth
+    updateUser(username: String!, email: String!, password: String!,role:String): User
+    deleteUser: User
     login(email: String!, password: String!): Auth
-    createAnnouncement(announcementBody: String!): Announcement
-    updateAnnouncement(_id: ID!, announcementBody: String!): Announcement
+    createAnnouncement(announcementTitle:String!, announcementBody: String!): Announcement
+    updateAnnouncement(_id: ID!,announcementTitle:String!, announcementBody: String!): Announcement
     createLeague(leagueName: String!): League
     updateLeague(leagueName: String!): League
     deleteLeague: League

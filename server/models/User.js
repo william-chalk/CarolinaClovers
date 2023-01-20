@@ -1,7 +1,7 @@
 const { Schema, model } = require("mongoose");
 const bycrypt = require("bcrypt");
 
-const adminSchema = new Schema({
+const userSchema = new Schema({
   username: {
     type: String,
     required: true,
@@ -18,6 +18,10 @@ const adminSchema = new Schema({
     required: true,
     minLength: 7,
   },
+  role:{
+    type:String,
+    default:"user"
+  },
   announcements: [
     {
       type: Schema.Types.ObjectId,
@@ -26,7 +30,7 @@ const adminSchema = new Schema({
   ],
 });
 
-adminSchema.pre("save", async function (next) {
+userSchema.pre("save", async function (next) {
   if (this.isNew || this.isModified("password")) {
     const saltRounds = 10;
     this.password = await bycrypt.hash(this.password, saltRounds);
@@ -35,10 +39,10 @@ adminSchema.pre("save", async function (next) {
   next();
 });
 
-adminSchema.methods.isCorrectPassword = async function (password) {
+userSchema.methods.isCorrectPassword = async function (password) {
   return bycrypt.compare(password, this.password);
 };
 
-const Admin = model("Admin", adminSchema);
+const User = model("User", userSchema);
 
-module.exports = Admin;
+module.exports = User;

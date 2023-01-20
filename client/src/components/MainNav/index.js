@@ -8,7 +8,7 @@
 //Sponser
 
 import React from "react";
-import Dropdown from "react-bootstrap/Dropdown";
+import {Dropdown,Button} from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 import Auth from "../../context/auth";
@@ -72,6 +72,26 @@ function MainNav() {
             <Dropdown.Menu></Dropdown.Menu>
           </Dropdown>
         </>
+        {Auth.loggedIn()?(
+          <>
+            <Button onClick={logout} variant="success">
+              <Link style={{color:"gold",textDecoration:"none"}} to="/">Logout</Link>
+            </Button>
+          </>
+        ):(
+          <>
+          <>
+          <Button variant="success">
+          <Link style={{color:"gold",textDecoration:"none"}} to="/login">Login</Link>
+          </Button>
+          </>
+          <>
+          <Button variant="success">
+          <Link style={{color:"gold",textDecoration:"none"}} to="/signup">Signup</Link>
+          </Button>
+          </>
+          </>
+        )}
       </nav>
     </header>
   );

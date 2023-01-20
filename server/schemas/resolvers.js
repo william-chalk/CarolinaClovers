@@ -1,19 +1,19 @@
 const { AuthenticationError } = require("apollo-server-express");
 const omit = require("lodash.omit");
 
-const { Admin, TeamMember, Announcement, League } = require("../models");
+const { User, TeamMember, Announcement, League } = require("../models");
 
 const { signToken } = require("../utils/auth");
 
 const resolvers = {
   Query: {
-    getAdmins: async (parent, args, context) => {
-      if (context.admin) {
-        const admin = await Admin.find()
+    getUsers: async (parent, args, context) => {
+      if (context.user) {
+        const user = await User.find()
           .select("-__v -password")
           .populate("announcements");
 
-        return admin;
+        return user;
       }
       throw new AuthenticationError("Not logged in!");
     },
@@ -57,51 +57,51 @@ const resolvers = {
     },
   },
   Mutation: {
-    createAdmin: async (parent, args) => {
-      const admin = await Admin.create(args);
-      const token = signToken(admin);
-      admin.isAuthenticated = true;
-      return { token, admin };
+    createUser: async (parent, args) => {
+      const user = await User.create(args);
+      const token = signToken(user);
+      user.isAuthenticated = true;
+      return { token, user};
     },
-    updateAdmin: async (parent, args, context) => {
-      if (context.admin) {
-        return Admin.findByIdAndUpdate(context.admin._id, args, { new: true });
+    updateUser: async (parent, args, context) => {
+      if (context.user.role === 'admin') {
+        return User.findByIdAndUpdate(context.user._id, args, { new: true });
       }
-      throw new AuthenticationError("Not logged in!");
+      throw new AuthenticationError("You must be an admin to perform this action!");
     },
-    deleteAdmin: async (parent, args, context) => {
-      if (context.admin) {
-        const admin = await Admin.findByIdAndDelete(context.admin._id);
-        return admin;
+    deleteUser: async (parent, args, context) => {
+      if (context.user.role === 'admin') {
+        const user = await User.findByIdAndDelete(context.user._id);
+        return user;
       }
 
-      throw new AuthenticationError("not logged in!");
+      throw new AuthenticationError("You must be an admin to perform this action!");
     },
     login: async (parent, { email, password }) => {
-      const admin = await Admin.findOne({ email });
-      if (!admin) {
+      const user = await User.findOne({ email });
+      if (!user) {
         throw new AuthenticationError("Incorrect credentials");
       }
 
-      const correctPw = await admin.isCorrectPassword(password);
+      const correctPw = await user.isCorrectPassword(password);
       console.log(correctPw);
 
       if (!correctPw) {
         throw new AuthenticationError("Incorrect credentials");
       }
 
-      omit(admin._doc, "password");
+      omit(user._doc, "password");
 
-      const token = signToken(admin);
+      const token = signToken(user);
 
-      return { token, admin };
+      return { token, user };
     },
     createAnnouncement: async (parent, args, context) => {
-      if (context.admin) {
+      if (context.user.role === 'admin') {
         const announcement = await Announcement.create(args);
 
-        const adminData = await Admin.findByIdAndUpdate(
-          { _id: context.admin._id },
+        const userData = await User.findByIdAndUpdate(
+          { _id: context.user._id },
           { $push: { announcements: announcement._id } },
           { new: true }
         );
@@ -109,109 +109,109 @@ const resolvers = {
         return announcement;
       }
 
-      throw new AuthenticationError("You need to be logged in!");
+      throw new AuthenticationError("You must be an admin to perform this action!");
     },
     updateAnnouncement: async (parent, args, context) => {
-      if (context.admin) {
+      if (context.user.role === 'admin') {
         const updatedAnnouncement = await Announcement.findOneAndUpdate(
           { _id: args._id },
           args
         );
-        await Admin.findByIdAndUpdate(
-          { _id: context.admin._id },
+        await User.findByIdAndUpdate(
+          { _id: context.user._id },
           { $addToSet: { announcements: args._id } },
           { new: true }
         );
 
         return updatedAnnouncement;
       }
-      throw new AuthenticationError("You need to be logged in!");
+      throw new AuthenticationError("You must be an admin to perform this action!");
     },
     createLeague: async (parent, args, context) => {
-      if (context.admin) {
+      if (context.user.role === 'admin') {
         const league = await League.create(args);
 
-        const adminData = await Admin.findByIdAndUpdate(
-          { _id: context.admin._id },
+        const userData = await User.findByIdAndUpdate(
+          { _id: context.user._id },
           { $push: { createdLeagues: league._id } },
           { new: true }
         );
 
         return league;
       }
-      throw new AuthenticationError("You need to be logged in!");
+      throw new AuthenticationError("You must be an admin to perform this action!");
     },
     updateLeague: async (parent, args, context) => {
-      if (context.admin) {
+      if (context.user.role === 'admin') {
         const updatedLeague = await League.findOneAndUpdate(
           { _id: args._id },
           args
         );
 
-        await Admin.findByIdAndUpdate(
+        await User.findByIdAndUpdate(
           { _id: context.admin._id },
           { $addToSet: { createdLeagues: args._id } },
           { new: true }
         );
         return updatedLeague;
       }
-      throw new AuthenticationError("You need to be logged in!");
+      throw new AuthenticationError("You must be an admin to perform this action!");
     },
     deleteLeague: async (parent, args, context) => {
-      if (context.admin) {
+      if (context.user.role === 'admin') {
         const league = await League.findByIdAndDelete({ _id: args._id });
-        await Admin.findByIdAndUpdate(
+        await User.findByIdAndUpdate(
           { _id: context.admin._id },
           { $pull: { createdLeagues: league._id } }
         );
 
         return league;
       }
-      throw new AuthenticationError("You need to be logged in!");
+      throw new AuthenticationError("You must be an admin to perform this action!");
     },
     createTeamMembers: async (parent, args, context) => {
-      if (context.admin) {
+      if (context.user.role === 'admin') {
         const teamMember = await TeamMember.create(args);
 
-        const adminData = await Admin.findByIdAndUpdate(
-          { _id: context.admin._id },
+        const userData = await Admin.findByIdAndUpdate(
+          { _id: context.user._id },
           { $push: { createdTeamMembers: teamMember._id } },
           { new: true }
         );
 
         return teamMember;
       }
-      throw new AuthenticationError("You need to be logged in!");
+      throw new AuthenticationError("You must be an admin to perform this action!");
     },
     updateTeamMember: async (parent, args, context) => {
-      if (context.admin) {
+      if (context.user.role === 'admin') {
         const updatedTeamMember = await TeamMember.findOneAndUpdate(
           { _id: args._id },
           args
         );
 
-        await Admin.findByIdAndUpdate(
-          { _id: context.admin._id },
+        await User.findByIdAndUpdate(
+          { _id: context.user._id },
           { $addToSet: { createdTeamMembers: args._id } },
           { new: true }
         );
 
         return updatedTeamMember;
       }
-      throw new AuthenticationError("You need to be logged in!");
+      throw new AuthenticationError("You must be an admin to perform this action!");
     },
     deleteTeamMember: async (parent, args, context) => {
-      if (context.admin) {
+      if (context.user.role === 'admin') {
         const teamMember = await TeamMember.findByIdAndDelete({
           _id: args._id,
         });
         await Admin.findByIdAndUpdate(
-          { _id: context.admin._id },
+          { _id: context.user._id },
           { $pull: { createdTeamMembers: teamMember._id } }
         );
         return teamMember;
       }
-      throw new AuthenticationError("You need to be logged in!");
+      throw new AuthenticationError("You must be an admin to perform this action!");
     },
   },
 };
