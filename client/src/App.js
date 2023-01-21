@@ -25,12 +25,13 @@ import HeadCoaches from "./pages/HeadCoaches";
 import Admin from "./pages/Admin";
 import LoginForm from "./pages/Login";
 import Signup from "./pages/Signup";
-import LeaguePage from './pages/LeaguePage';
+import LeaguePage from "./pages/LeaguePage";
 
 const httpLink = createHttpLink({
   uri: "/graphql",
+  credentials: "include",
 });
-//TODO: need to update route to multi project view?
+
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem("id_token");
   return {
@@ -70,13 +71,13 @@ function App() {
                     path="/message-to-parents"
                     element={<MessageToParents />}
                   />
-                  <Route path="/login" element={<LoginForm/>}/>
-                  <Route path="/signup" element={<Signup/>}/>
+                  <Route path="/login" element={<LoginForm />} />
+                  <Route path="/signup" element={<Signup />} />
                   <Route path="/our-vision" element={<OurVision />} />
                   <Route path="/saftey" element={<Saftey />} />
                   <Route path="/contact-us" element={<ContactUs />} />
                   <Route path="/head-coaches" element={<HeadCoaches />} />
-                  <Route path="/leagues" element={<LeaguePage/>}/>
+                  <Route path="/leagues" element={<LeaguePage />} />
                   <Route path="/admin" element={<Admin />} />
                   <Route path="/login" element={<LoginForm />} />
                 </Routes>

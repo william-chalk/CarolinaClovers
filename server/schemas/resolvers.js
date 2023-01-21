@@ -61,21 +61,25 @@ const resolvers = {
       const user = await User.create(args);
       const token = signToken(user);
       user.isAuthenticated = true;
-      return { token, user};
+      return { token, user };
     },
     updateUser: async (parent, args, context) => {
-      if (context.user.role === 'admin') {
+      if (context.user.role === "admin") {
         return User.findByIdAndUpdate(context.user._id, args, { new: true });
       }
-      throw new AuthenticationError("You must be an admin to perform this action!");
+      throw new AuthenticationError(
+        "You must be an admin to perform this action!"
+      );
     },
     deleteUser: async (parent, args, context) => {
-      if (context.user.role === 'admin') {
+      if (context.user.role === "admin") {
         const user = await User.findByIdAndDelete(context.user._id);
         return user;
       }
 
-      throw new AuthenticationError("You must be an admin to perform this action!");
+      throw new AuthenticationError(
+        "You must be an admin to perform this action!"
+      );
     },
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
@@ -97,7 +101,7 @@ const resolvers = {
       return { token, user };
     },
     createAnnouncement: async (parent, args, context) => {
-      if (context.user.role === 'admin') {
+      if (context.user.role === "admin") {
         const announcement = await Announcement.create(args);
 
         const userData = await User.findByIdAndUpdate(
@@ -109,10 +113,12 @@ const resolvers = {
         return announcement;
       }
 
-      throw new AuthenticationError("You must be an admin to perform this action!");
+      throw new AuthenticationError(
+        "You must be an admin to perform this action!"
+      );
     },
     updateAnnouncement: async (parent, args, context) => {
-      if (context.user.role === 'admin') {
+      if (context.user.role === "admin") {
         const updatedAnnouncement = await Announcement.findOneAndUpdate(
           { _id: args._id },
           args
@@ -125,10 +131,12 @@ const resolvers = {
 
         return updatedAnnouncement;
       }
-      throw new AuthenticationError("You must be an admin to perform this action!");
+      throw new AuthenticationError(
+        "You must be an admin to perform this action!"
+      );
     },
     createLeague: async (parent, args, context) => {
-      if (context.user.role === 'admin') {
+      if (context.user.role === "admin") {
         const league = await League.create(args);
 
         const userData = await User.findByIdAndUpdate(
@@ -139,10 +147,12 @@ const resolvers = {
 
         return league;
       }
-      throw new AuthenticationError("You must be an admin to perform this action!");
+      throw new AuthenticationError(
+        "You must be an admin to perform this action!"
+      );
     },
     updateLeague: async (parent, args, context) => {
-      if (context.user.role === 'admin') {
+      if (context.user.role === "admin") {
         const updatedLeague = await League.findOneAndUpdate(
           { _id: args._id },
           args
@@ -155,10 +165,12 @@ const resolvers = {
         );
         return updatedLeague;
       }
-      throw new AuthenticationError("You must be an admin to perform this action!");
+      throw new AuthenticationError(
+        "You must be an admin to perform this action!"
+      );
     },
     deleteLeague: async (parent, args, context) => {
-      if (context.user.role === 'admin') {
+      if (context.user.role === "admin") {
         const league = await League.findByIdAndDelete({ _id: args._id });
         await User.findByIdAndUpdate(
           { _id: context.admin._id },
@@ -167,10 +179,12 @@ const resolvers = {
 
         return league;
       }
-      throw new AuthenticationError("You must be an admin to perform this action!");
+      throw new AuthenticationError(
+        "You must be an admin to perform this action!"
+      );
     },
     createTeamMembers: async (parent, args, context) => {
-      if (context.user.role === 'admin') {
+      if (context.user.role === "admin") {
         const teamMember = await TeamMember.create(args);
 
         const userData = await Admin.findByIdAndUpdate(
@@ -181,10 +195,12 @@ const resolvers = {
 
         return teamMember;
       }
-      throw new AuthenticationError("You must be an admin to perform this action!");
+      throw new AuthenticationError(
+        "You must be an admin to perform this action!"
+      );
     },
     updateTeamMember: async (parent, args, context) => {
-      if (context.user.role === 'admin') {
+      if (context.user.role === "admin") {
         const updatedTeamMember = await TeamMember.findOneAndUpdate(
           { _id: args._id },
           args
@@ -198,20 +214,24 @@ const resolvers = {
 
         return updatedTeamMember;
       }
-      throw new AuthenticationError("You must be an admin to perform this action!");
+      throw new AuthenticationError(
+        "You must be an admin to perform this action!"
+      );
     },
     deleteTeamMember: async (parent, args, context) => {
-      if (context.user.role === 'admin') {
+      if (context.user.role === "admin") {
         const teamMember = await TeamMember.findByIdAndDelete({
           _id: args._id,
         });
-        await Admin.findByIdAndUpdate(
+        await User.findByIdAndUpdate(
           { _id: context.user._id },
           { $pull: { createdTeamMembers: teamMember._id } }
         );
         return teamMember;
       }
-      throw new AuthenticationError("You must be an admin to perform this action!");
+      throw new AuthenticationError(
+        "You must be an admin to perform this action!"
+      );
     },
   },
 };
