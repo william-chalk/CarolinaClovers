@@ -6,7 +6,7 @@ const typeDefs = gql`
     username: String
     email: String
     password: String
-    role:String
+    role: String
     isAuthenticated: Boolean
     announcements: [Announcement]
     createdLeagues: [League]
@@ -14,7 +14,7 @@ const typeDefs = gql`
   }
   type Announcement {
     _id: ID
-    announcementTitle:String
+    announcementTitle: String
     announcementBody: String
     createdAt: String
   }
@@ -40,9 +40,9 @@ const typeDefs = gql`
 
   type Query {
     getLeagueById(_id: ID!): League
-    getLeagues:[League]
+    getLeagues: [League]
     getPlayersByLeague(leagueName: String!): [TeamMember]
-    getPlayers(firstName:String,lastName:String): [TeamMember]
+    getPlayers(firstName: String, lastName: String): [TeamMember]
     getUsers: [User]
     getAnnouncements: [Announcement]
     getAnnouncementById(_id: ID!): Announcement
@@ -50,11 +50,23 @@ const typeDefs = gql`
 
   type Mutation {
     createUser(username: String!, email: String!, password: String!): Auth
-    updateUser(username: String!, email: String!, password: String!,role:String): User
+    updateUser(
+      username: String!
+      email: String!
+      password: String!
+      role: String
+    ): User
     deleteUser: User
     login(email: String!, password: String!): Auth
-    createAnnouncement(announcementTitle:String!, announcementBody: String!): Announcement
-    updateAnnouncement(_id: ID!,announcementTitle:String!, announcementBody: String!): Announcement
+    createAnnouncement(
+      announcementTitle: String!
+      announcementBody: String!
+    ): Announcement
+    updateAnnouncement(
+      _id: ID!
+      announcementTitle: String!
+      announcementBody: String!
+    ): Announcement
     createLeague(leagueName: String!): League
     updateLeague(leagueName: String!): League
     deleteLeague: League
@@ -63,7 +75,6 @@ const typeDefs = gql`
       lastName: String!
       playerNumber: Int!
       playerPosition: String!
-      playerLeague: String!
     ): TeamMember
     updateTeamMember(
       _id: ID!

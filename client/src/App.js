@@ -26,6 +26,7 @@ import Admin from "./pages/Admin";
 import LoginForm from "./pages/Login";
 import Signup from "./pages/Signup";
 import LeaguePage from "./pages/LeaguePage";
+import NotFound from "./pages/NotFound";
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -80,6 +81,7 @@ function App() {
                   <Route path="/leagues" element={<LeaguePage />} />
                   <Route path="/admin" element={<Admin />} />
                   <Route path="/login" element={<LoginForm />} />
+                  <Route path="*" element={<NotFound />} />
                 </Routes>
               </div>
             </Router>

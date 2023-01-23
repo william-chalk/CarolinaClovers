@@ -30,6 +30,7 @@ const LoginForm = (props) => {
       });
       Auth.login(data.login.token);
       navigate("/");
+      window.location.reload();
     } catch (e) {
       console.error(e);
     }

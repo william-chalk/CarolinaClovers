@@ -1,10 +1,11 @@
 const { Schema, model } = require("mongoose");
+const dateFormat = require("../utils/dateFormat");
 
 const announcementSchema = new Schema({
-  announcementTitle:{
-    type:String,
-    required:true,
-    maxLength:200
+  announcementTitle: {
+    type: String,
+    required: true,
+    maxLength: 200,
   },
   announcementBody: {
     type: String,
@@ -15,10 +16,6 @@ const announcementSchema = new Schema({
     type: Date,
     default: Date.now,
     get: (timestamp) => dateFormat(timestamp),
-  },
-  createdBy: {
-    type: String,
-    required: true,
   },
 });
 

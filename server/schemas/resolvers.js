@@ -88,20 +88,18 @@ const resolvers = {
       }
 
       const correctPw = await user.isCorrectPassword(password);
-      console.log(correctPw);
 
       if (!correctPw) {
         throw new AuthenticationError("Incorrect credentials");
       }
 
       omit(user._doc, "password");
-
       const token = signToken(user);
 
       return { token, user };
     },
     createAnnouncement: async (parent, args, context) => {
-      if (context.user.role === "admin") {
+      if (context.user) {
         const announcement = await Announcement.create(args);
 
         const userData = await User.findByIdAndUpdate(
@@ -136,7 +134,7 @@ const resolvers = {
       );
     },
     createLeague: async (parent, args, context) => {
-      if (context.user.role === "admin") {
+      if (context.user) {
         const league = await League.create(args);
 
         const userData = await User.findByIdAndUpdate(
@@ -144,7 +142,6 @@ const resolvers = {
           { $push: { createdLeagues: league._id } },
           { new: true }
         );
-
         return league;
       }
       throw new AuthenticationError(
@@ -187,7 +184,7 @@ const resolvers = {
       if (context.user.role === "admin") {
         const teamMember = await TeamMember.create(args);
 
-        const userData = await Admin.findByIdAndUpdate(
+        const userData = await User.findByIdAndUpdate(
           { _id: context.user._id },
           { $push: { createdTeamMembers: teamMember._id } },
           { new: true }
