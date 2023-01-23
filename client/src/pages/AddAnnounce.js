@@ -47,7 +47,6 @@ function AddAnounce() {
     console.log(event.target.files[0]);
   };
 
-  const fileUpload = (event) => {};
 
   const handleAnnouncementSubmit = async (event) => {
     event.preventDefault();

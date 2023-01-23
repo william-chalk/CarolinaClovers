@@ -63,17 +63,17 @@ const resolvers = {
       user.isAuthenticated = true;
       return { token, user };
     },
-    updateUser: async (parent, args, context) => {
-      if (context.user.role === "admin") {
-        return User.findByIdAndUpdate(context.user._id, args, { new: true });
+    updateUser: async (parent, args, contextValue) => {
+      if (contextValue.user.role.includes('admin')) {
+        return User.findByIdAndUpdate(contextValue.user._id, args, { new: true });
       }
       throw new AuthenticationError(
         "You must be an admin to perform this action!"
       );
     },
-    deleteUser: async (parent, args, context) => {
-      if (context.user.role === "admin") {
-        const user = await User.findByIdAndDelete(context.user._id);
+    deleteUser: async (parent, args, contextValue) => {
+      if (contextValue.user.role.includes('admin')) {
+        const user = await User.findByIdAndDelete(contextValue.user._id);
         return user;
       }
 
@@ -98,12 +98,12 @@ const resolvers = {
 
       return { token, user };
     },
-    createAnnouncement: async (parent, args, context) => {
-      if (context.user) {
+    createAnnouncement: async (parent, args, contextValue) => {
+      if (contextValue.user.role.includes('admin')) {
         const announcement = await Announcement.create(args);
 
         const userData = await User.findByIdAndUpdate(
-          { _id: context.user._id },
+          { _id: contextValue.user._id },
           { $push: { announcements: announcement._id } },
           { new: true }
         );
@@ -115,14 +115,14 @@ const resolvers = {
         "You must be an admin to perform this action!"
       );
     },
-    updateAnnouncement: async (parent, args, context) => {
-      if (context.user.role === "admin") {
+    updateAnnouncement: async (parent, args, contextValue) => {
+      if (contextValue.user.role.includes('admin')) {
         const updatedAnnouncement = await Announcement.findOneAndUpdate(
           { _id: args._id },
           args
         );
         await User.findByIdAndUpdate(
-          { _id: context.user._id },
+          { _id: contextValue.user._id },
           { $addToSet: { announcements: args._id } },
           { new: true }
         );
@@ -133,12 +133,12 @@ const resolvers = {
         "You must be an admin to perform this action!"
       );
     },
-    createLeague: async (parent, args, context) => {
-      if (context.user) {
+    createLeague: async (parent, args, contextValue) => {
+      if (contextValue.user.role.includes('admin')) {
         const league = await League.create(args);
 
         const userData = await User.findByIdAndUpdate(
-          { _id: context.user._id },
+          { _id: contextValue.user._id },
           { $push: { createdLeagues: league._id } },
           { new: true }
         );
@@ -148,15 +148,15 @@ const resolvers = {
         "You must be an admin to perform this action!"
       );
     },
-    updateLeague: async (parent, args, context) => {
-      if (context.user.role === "admin") {
+    updateLeague: async (parent, args, contextValue) => {
+      if (contextValue.user.role.includes('admin')) {
         const updatedLeague = await League.findOneAndUpdate(
           { _id: args._id },
           args
         );
 
         await User.findByIdAndUpdate(
-          { _id: context.admin._id },
+          { _id: contextValue.admin._id },
           { $addToSet: { createdLeagues: args._id } },
           { new: true }
         );
@@ -166,11 +166,11 @@ const resolvers = {
         "You must be an admin to perform this action!"
       );
     },
-    deleteLeague: async (parent, args, context) => {
-      if (context.user.role === "admin") {
+    deleteLeague: async (parent, args, contextValue) => {
+      if (contextValue.user.role.includes('admin')) {
         const league = await League.findByIdAndDelete({ _id: args._id });
         await User.findByIdAndUpdate(
-          { _id: context.admin._id },
+          { _id: contextValue.admin._id },
           { $pull: { createdLeagues: league._id } }
         );
 
@@ -180,12 +180,12 @@ const resolvers = {
         "You must be an admin to perform this action!"
       );
     },
-    createTeamMembers: async (parent, args, context) => {
-      if (context.user.role === "admin") {
+    createTeamMembers: async (parent, args, contextValue) => {
+      if (contextValue.user.role.includes('admin')) {
         const teamMember = await TeamMember.create(args);
 
         const userData = await User.findByIdAndUpdate(
-          { _id: context.user._id },
+          { _id: contextValue.user._id },
           { $push: { createdTeamMembers: teamMember._id } },
           { new: true }
         );
@@ -196,15 +196,15 @@ const resolvers = {
         "You must be an admin to perform this action!"
       );
     },
-    updateTeamMember: async (parent, args, context) => {
-      if (context.user.role === "admin") {
+    updateTeamMember: async (parent, args, contextValue) => {
+      if (contextValue.user.role.includes('admin')) {
         const updatedTeamMember = await TeamMember.findOneAndUpdate(
           { _id: args._id },
           args
         );
 
         await User.findByIdAndUpdate(
-          { _id: context.user._id },
+          { _id: contextValue.user._id },
           { $addToSet: { createdTeamMembers: args._id } },
           { new: true }
         );
@@ -215,13 +215,13 @@ const resolvers = {
         "You must be an admin to perform this action!"
       );
     },
-    deleteTeamMember: async (parent, args, context) => {
-      if (context.user.role === "admin") {
+    deleteTeamMember: async (parent, args, contextValue) => {
+      if (contextValue.user.role.includes('admin')) {
         const teamMember = await TeamMember.findByIdAndDelete({
           _id: args._id,
         });
         await User.findByIdAndUpdate(
-          { _id: context.user._id },
+          { _id: contextValue.user._id },
           { $pull: { createdTeamMembers: teamMember._id } }
         );
         return teamMember;
