@@ -7,14 +7,14 @@
 //Document download links
 import { useQuery } from "@apollo/client";
 import React from "react";
-import { QUERY_USER } from "../graphql/queries";
+import { QUERY_ANNOUNCEMENTS } from "../graphql/queries";
 
 
 
 
 function HomePage() {
 
-  const {loading,data} = useQuery(QUERY_USER);
+  const {loading,data} = useQuery(QUERY_ANNOUNCEMENTS);
 
   const userAnnouncement = data?.getAnnouncements || [];
 

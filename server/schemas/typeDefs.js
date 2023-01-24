@@ -44,7 +44,7 @@ const typeDefs = gql`
     getPlayersByLeague(leagueName: String!): [TeamMember]
     getPlayers(firstName: String, lastName: String): [TeamMember]
     getUsers: [User]
-    getAnnouncements: [Announcement]
+    getAnnouncements(username:String): [Announcement]
     getAnnouncementById(_id: ID!): Announcement
   }
 
