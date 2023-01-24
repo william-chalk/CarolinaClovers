@@ -20,7 +20,7 @@ function AddAnounce() {
           data: {
             getUsers: {
               ...getUsers,
-              announcements: [...getUsers.announcements, addAnnouncement],
+              announcements: [...getUsers?.announcements, addAnnouncement],
             },
           },
         });
@@ -37,11 +37,6 @@ function AddAnounce() {
       });
     },
   });
-
-  const handleChange = (event) => {
-    setAnnouncementTitle(event.target.value);
-    setAnnouncementBody(event.target.value);
-  };
 
   const fileSelected = (event) => {
     console.log(event.target.files[0]);
@@ -80,8 +75,8 @@ function AddAnounce() {
                 <Form.Control
                   type="text"
                   placeholder="Title"
-                  name="title"
-                  onChange={handleChange}
+                  name="announcementTitle"
+                  onChange={(e) => setAnnouncementTitle(e.target.value)}
                 />
               </Form.Group>
               <Form.Group className="mb-3" controlId="announcementContent">
@@ -89,8 +84,8 @@ function AddAnounce() {
                 <Form.Control
                   as="textarea"
                   rows={3}
-                  name="content"
-                  onChange={handleChange}
+                  name="announcementBody"
+                  onChange={(e) => setAnnouncementBody(e.target.value)}
                 />
               </Form.Group>
               <Form.Group className="mb-3" controlId="announcementImage">

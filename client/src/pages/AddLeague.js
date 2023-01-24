@@ -19,7 +19,7 @@ function AddLeague() {
           data: {
             getUsers: {
               ...getUsers,
-              createdLeagues: [...getUsers.createdLeagues, addLeague],
+              createdLeagues: [...getUsers?.createdLeagues, addLeague],
             },
           },
         });

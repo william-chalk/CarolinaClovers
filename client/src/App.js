@@ -3,7 +3,7 @@ import {
   ApolloClient,
   InMemoryCache,
   ApolloProvider,
-  createHttpLink,
+  createHttpLink,ApolloLink
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -31,6 +31,7 @@ import AddAnnounce from './pages/AddAnnounce';
 import AddLeague from './pages/AddLeague';
 import AddMember from './pages/AddMember';
 
+
 const httpLink = createHttpLink({
   uri: "/graphql",
   credentials: "include",
@@ -45,6 +46,7 @@ const authLink = setContext((_, { headers }) => {
     },
   };
 });
+
 
 const client = new ApolloClient({
   link: authLink.concat(httpLink),

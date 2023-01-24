@@ -5,9 +5,18 @@
 //Registration button
 //Upcoming events
 //Document download links
+import { useQuery } from "@apollo/client";
 import React from "react";
+import { QUERY_USER } from "../graphql/queries";
+
 
 function HomePage() {
+
+  const {loading,data} = useQuery(QUERY_USER);
+
+  const announcements = data?.getUsers.announcements || [];
+
+  console.log(data);
   return (
     <div style={{backgroundColor:"rgba(255,255,255,0.9)",height:"50vh"}}>
       <div

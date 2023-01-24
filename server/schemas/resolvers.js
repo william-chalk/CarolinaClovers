@@ -1,20 +1,18 @@
 const { AuthenticationError } = require("apollo-server-express");
 const omit = require("lodash.omit");
 
-const { User, TeamMember, Announcement, League } = require("../models");
+const { User, TeamMember, Announcements, League } = require("../models");
 
 const { signToken } = require("../utils/auth");
 
 const resolvers = {
   Query: {
     getUsers: async (parent, args, context) => {
-      if (context.user) {
         const user = await User.find()
           .select("-__v -password")
           .populate("announcements");
 
         return user;
-      }
       throw new AuthenticationError("Not logged in!");
     },
     getPlayersByLeague: async (parent, { leagueName }) => {
@@ -42,14 +40,14 @@ const resolvers = {
     },
     getAnnouncements: async (parent, args, context) => {
       if (context.announcements) {
-        const announcements = await Announcement.find();
+        const announcements = await Announcements.find();
         return announcements;
       }
 
       throw new AuthenticationError("No announcements found!");
     },
     getAnnouncementById: async (parent, { _id }) => {
-      const announcement = await Announcement.findOne({ _id });
+      const announcement = await Announcements.findOne({ _id });
       if (!announcement) {
         throw new AuthenticationError("Annoucement not found with this id!");
       }
@@ -102,7 +100,7 @@ const resolvers = {
     },
     createAnnouncement: async (parent, args, contextValue) => {
       if (contextValue.user.role.includes("admin")) {
-        const announcement = await Announcement.create(args);
+        const announcement = await Announcements.create(args);
 
         const userData = await User.findByIdAndUpdate(
           { _id: contextValue.user._id },
@@ -119,7 +117,7 @@ const resolvers = {
     },
     updateAnnouncement: async (parent, args, contextValue) => {
       if (contextValue.user.role.includes("admin")) {
-        const updatedAnnouncement = await Announcement.findOneAndUpdate(
+        const updatedAnnouncement = await Announcements.findOneAndUpdate(
           { _id: args._id },
           args
         );
@@ -144,10 +142,8 @@ const resolvers = {
           { $push: { createdLeagues: league._id } },
           { new: true }
         );
-        console.log(contextValue.user.role);
         return league;
       }
-      console.log(contextValue.user.role);
       throw new AuthenticationError(
         "You must be an admin to perform this action!"
       );
@@ -185,17 +181,18 @@ const resolvers = {
       );
     },
     createTeamMembers: async (parent, args, contextValue) => {
+      console.log(contextValue.user.role);
       if (contextValue.user.role.includes("admin")) {
         const teamMember = await TeamMember.create(args);
 
-        const userData = await User.findByIdAndUpdate(
+          await User.findByIdAndUpdate(
           { _id: contextValue.user._id },
           { $push: { createdTeamMembers: teamMember._id } },
           { new: true }
         );
-
         return teamMember;
       }
+      console.log(contextValue.user.role)
       throw new AuthenticationError(
         "You must be an admin to perform this action!"
       );

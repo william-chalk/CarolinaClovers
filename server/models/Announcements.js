@@ -19,6 +19,6 @@ const announcementSchema = new Schema({
   },
 });
 
-const Announcement = model("Announcement", announcementSchema);
+const Announcements = model("Announcements", announcementSchema);
 
-module.exports = Announcement;
+module.exports = Announcements;
