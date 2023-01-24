@@ -12,7 +12,7 @@ const teamMemberSchema = new Schema({
     trim: true,
   },
   playerNumber: {
-    type: Number,
+    type: String,
     required: true,
   },
   playerPosition: {

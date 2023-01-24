@@ -28,9 +28,9 @@ const typeDefs = gql`
     _id: ID
     firstName: String
     lastName: String
-    playerNumber: Int
+    playerNumber: String
     playerPosition: String
-    playerLeague: League
+    playerLeague: [League]
   }
 
   type Auth {
@@ -44,7 +44,7 @@ const typeDefs = gql`
     getPlayersByLeague(leagueName: String!): [TeamMember]
     getPlayers(firstName: String, lastName: String): [TeamMember]
     getUsers: [User]
-    getAnnouncements: [Announcement]
+    getAnnouncements(username:String): [Announcement]
     getAnnouncementById(_id: ID!): Announcement
   }
 
@@ -73,14 +73,14 @@ const typeDefs = gql`
     createTeamMembers(
       firstName: String!
       lastName: String!
-      playerNumber: Int!
+      playerNumber: String!
       playerPosition: String!
     ): TeamMember
     updateTeamMember(
       _id: ID!
       firstName: String!
       lastName: String!
-      playerNumber: Int!
+      playerNumber: String!
       playerPosition: String!
       playerLeague: String!
     ): TeamMember

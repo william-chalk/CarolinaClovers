@@ -28,6 +28,12 @@ const userSchema = new Schema({
       ref: "Announcements",
     },
   ],
+  createdLeagues:[
+    {
+      type:Schema.Types.ObjectId,
+      ref: "League"
+    }
+  ]
 });
 
 userSchema.pre("save", async function (next) {

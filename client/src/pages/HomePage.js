@@ -5,9 +5,20 @@
 //Registration button
 //Upcoming events
 //Document download links
+import { useQuery } from "@apollo/client";
 import React from "react";
+import { QUERY_ANNOUNCEMENTS } from "../graphql/queries";
+
+
+
 
 function HomePage() {
+
+  const {loading,data} = useQuery(QUERY_ANNOUNCEMENTS);
+
+  const userAnnouncement = data?.getAnnouncements || [];
+
+  console.log(data);
   return (
     <div style={{backgroundColor:"rgba(255,255,255,0.9)",height:"50vh"}}>
       <div
@@ -30,6 +41,13 @@ function HomePage() {
       <div>
         <h3>Welcome to our site!</h3>
         <p>Carolina Clovers is a baseball team!</p>
+      </div>
+      <div>
+        {userAnnouncement.map((announcement)=>(
+          <div key={announcement._id}>
+            <p>Hello</p>
+          </div>
+        ))}
       </div>
     </div>
   );

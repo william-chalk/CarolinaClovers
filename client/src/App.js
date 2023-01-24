@@ -3,8 +3,9 @@ import {
   ApolloClient,
   InMemoryCache,
   ApolloProvider,
-  createHttpLink,
+  createHttpLink,ApolloLink
 } from "@apollo/client";
+import {onError} from "apollo-link-error";
 import { setContext } from "@apollo/client/link/context";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { CookiesProvider } from "react-cookie";
@@ -31,6 +32,16 @@ import AddAnnounce from './pages/AddAnnounce';
 import AddLeague from './pages/AddLeague';
 import AddMember from './pages/AddMember';
 
+const errorLink = onError(({ graphQLErrors, networkError }) => {
+  if (graphQLErrors) {
+    console.log('graphQLErrors', graphQLErrors);
+  }
+  if (networkError) {
+    console.log('networkError', networkError);
+  }
+});
+
+
 const httpLink = createHttpLink({
   uri: "/graphql",
   credentials: "include",
@@ -46,8 +57,13 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
+const clientLink = authLink.concat(httpLink)
+
+const link = ApolloLink.from([errorLink, clientLink]);
+
+
 const client = new ApolloClient({
-  link: authLink.concat(httpLink),
+  link,
   cache: new InMemoryCache(),
 });
 

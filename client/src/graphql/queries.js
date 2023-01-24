@@ -72,9 +72,10 @@ export const QUERY_PLAYERS_BY_LEAGUE = gql`
 `;
 
 export const QUERY_ANNOUNCEMENTS = gql`
-  query getAnnouncements {
-    getAnnouncements {
+  query getAnnouncements($username:String) {
+    getAnnouncements(username:$username) {
       _id
+      announcementTitle
       announcementBody
       createdAt
     }
