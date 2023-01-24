@@ -27,12 +27,12 @@ function AddLeague() {
         console.warn(e);
       }
 
-      const { createdLeagues } = cache.readQuery({
+      const { getLeagues } = cache.readQuery({
         query: QUERY_LEAGUES,
       });
       cache.writeQuery({
         query: QUERY_LEAGUES,
-        data: { createdLeagues: [addLeague, ...createdLeagues] },
+        data: { getLeagues: [addLeague, ...getLeagues] },
       });
     },
   });

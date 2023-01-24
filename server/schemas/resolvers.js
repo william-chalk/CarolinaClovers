@@ -193,9 +193,10 @@ const resolvers = {
           { $push: { createdTeamMembers: teamMember._id } },
           { new: true }
         );
-
+        console.log("stopped");
         return teamMember;
       }
+      console.log("stopped");
       throw new AuthenticationError(
         "You must be an admin to perform this action!"
       );

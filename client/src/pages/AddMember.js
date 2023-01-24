@@ -22,7 +22,7 @@ function AddMember() {
         cache.writeQuery({
           query: QUERY_USER,
           data: {
-            getUsers: {
+            createdTeamMembers: {
               ...getUsers,
               createdTeamMembers: [...getUsers.createdTeamMembers, addPlayer],
             },
@@ -35,7 +35,7 @@ function AddMember() {
       const { getPlayers } = cache.readQuery({ query: QUERY_PLAYERS });
       cache.writeQuery({
         query: QUERY_PLAYERS,
-        data: { getPlayers: [addPlayer, ...createTeamMembers] },
+        data: { getPlayers: [addPlayer, ...getPlayers] },
       });
     },
   });
