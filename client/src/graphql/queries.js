@@ -75,6 +75,7 @@ export const QUERY_ANNOUNCEMENTS = gql`
   query getAnnouncements {
     getAnnouncements {
       _id
+      announcementTitle
       announcementBody
       createdAt
     }

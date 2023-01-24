@@ -10,10 +10,10 @@ const resolvers = {
     getUsers: async (parent, args, context) => {
         const user = await User.find()
           .select("-__v -password")
-          .populate("announcements");
+          .populate("announcements")
+          .populate("createdLeagues");
 
         return user;
-      throw new AuthenticationError("Not logged in!");
     },
     getPlayersByLeague: async (parent, { leagueName }) => {
       const players = await League.find({ leagueName });

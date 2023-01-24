@@ -10,11 +10,13 @@ import React from "react";
 import { QUERY_USER } from "../graphql/queries";
 
 
+
+
 function HomePage() {
 
   const {loading,data} = useQuery(QUERY_USER);
 
-  const announcements = data?.getUsers.announcements || [];
+  const userAnnouncement = data?.getAnnouncements || [];
 
   console.log(data);
   return (
@@ -39,6 +41,13 @@ function HomePage() {
       <div>
         <h3>Welcome to our site!</h3>
         <p>Carolina Clovers is a baseball team!</p>
+      </div>
+      <div>
+        {userAnnouncement.map((announcement)=>(
+          <div key={announcement._id}>
+            <p>Hello</p>
+          </div>
+        ))}
       </div>
     </div>
   );
