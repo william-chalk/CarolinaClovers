@@ -8,21 +8,23 @@ import { QUERY_USER, QUERY_PLAYERS } from "../graphql/queries";
 import Auth from "../context/auth";
 
 function AddMember() {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [playerPosition, setPlayerPosition] = useState("");
-  const [playerNumber, setPlayerNumber] = useState(0);
+  const [valueFields, setValueFields] = useState({
+    firstName: "",
+    lastName: "",
+    playerPosition: "",
+    playerNumber: 0,
+  });
 
   const [addPlayer] = useMutation(ADD_PLAYERS, {
     update(cache, { data: { addPlayer } }) {
       try {
-        const { user } = cache.readQuery({ query: QUERY_USER });
+        const { getUsers } = cache.readQuery({ query: QUERY_USER });
         cache.writeQuery({
           query: QUERY_USER,
           data: {
-            user: {
-              ...user,
-              createdTeamMembers: [...user.createdTeamMembers, addPlayer],
+            getUsers: {
+              ...getUsers,
+              createdTeamMembers: [...getUsers.createdTeamMembers, addPlayer],
             },
           },
         });
@@ -30,42 +32,37 @@ function AddMember() {
         console.warn(e);
       }
 
-      const { createdTeamMembers } = cache.readQuery({ query: QUERY_PLAYERS });
+      const { getPlayers } = cache.readQuery({ query: QUERY_PLAYERS });
       cache.writeQuery({
         query: QUERY_PLAYERS,
-        data: { createdTeamMembers: [addPlayer, ...createdTeamMembers] },
+        data: { getPlayers: [addPlayer, ...createTeamMembers] },
       });
     },
   });
 
   const handleChange = (event) => {
-    setFirstName(event.target.value);
-    setLastName(event.target.value);
-    setPlayerPosition(event.target.value);
-    setPlayerNumber(event.target.value);
+    const { name, value } = event.target;
+
+    setValueFields({
+      ...valueFields,
+      [name]: value,
+    });
   };
 
   const handleMemberSubmit = async (event) => {
     event.preventDefault();
-    console.log(firstName);
-    // console.log(lastName);
-    // console.log(playerPosition);
-    // console.log(playerNumber);
     try {
       await addPlayer({
-        variables: {
-          firstName,
-          lastName,
-          playerPosition,
-          playerNumber,
-        },
+        variables: { ...valueFields },
       });
 
       // clear form value
-      setFirstName("");
-      setLastName("");
-      setPlayerPosition("");
-      setPlayerNumber("");
+      setValueFields({
+        firstName: "",
+        lastName: "",
+        playerPosition: "",
+        playerNumber: 0,
+      });
     } catch (e) {
       console.error(e);
     }
@@ -83,7 +80,7 @@ function AddMember() {
                 <Form.Control
                   type="text"
                   placeholder="First Name"
-                  name="firstname"
+                  name="firstName"
                   onChange={handleChange}
                 />
               </Form.Group>
@@ -92,7 +89,7 @@ function AddMember() {
                 <Form.Control
                   type="text"
                   placeholder="Last Name"
-                  name="lastname"
+                  name="lastName"
                   onChange={handleChange}
                 />
               </Form.Group>

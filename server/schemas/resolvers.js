@@ -64,15 +64,17 @@ const resolvers = {
       return { token, user };
     },
     updateUser: async (parent, args, contextValue) => {
-      if (contextValue.user.role.includes('admin')) {
-        return User.findByIdAndUpdate(contextValue.user._id, args, { new: true });
+      if (contextValue.user.role.includes("admin")) {
+        return User.findByIdAndUpdate(contextValue.user._id, args, {
+          new: true,
+        });
       }
       throw new AuthenticationError(
         "You must be an admin to perform this action!"
       );
     },
     deleteUser: async (parent, args, contextValue) => {
-      if (contextValue.user.role.includes('admin')) {
+      if (contextValue.user.role.includes("admin")) {
         const user = await User.findByIdAndDelete(contextValue.user._id);
         return user;
       }
@@ -99,7 +101,7 @@ const resolvers = {
       return { token, user };
     },
     createAnnouncement: async (parent, args, contextValue) => {
-      if (contextValue.user.role.includes('admin')) {
+      if (contextValue.user.role.includes("admin")) {
         const announcement = await Announcement.create(args);
 
         const userData = await User.findByIdAndUpdate(
@@ -116,7 +118,7 @@ const resolvers = {
       );
     },
     updateAnnouncement: async (parent, args, contextValue) => {
-      if (contextValue.user.role.includes('admin')) {
+      if (contextValue.user.role.includes("admin")) {
         const updatedAnnouncement = await Announcement.findOneAndUpdate(
           { _id: args._id },
           args
@@ -134,7 +136,7 @@ const resolvers = {
       );
     },
     createLeague: async (parent, args, contextValue) => {
-      if (contextValue.user.role.includes('admin')) {
+      if (contextValue.user.role.includes("admin")) {
         const league = await League.create(args);
 
         const userData = await User.findByIdAndUpdate(
@@ -142,14 +144,16 @@ const resolvers = {
           { $push: { createdLeagues: league._id } },
           { new: true }
         );
+        console.log(contextValue.user.role);
         return league;
       }
+      console.log(contextValue.user.role);
       throw new AuthenticationError(
         "You must be an admin to perform this action!"
       );
     },
     updateLeague: async (parent, args, contextValue) => {
-      if (contextValue.user.role.includes('admin')) {
+      if (contextValue.user.role.includes("admin")) {
         const updatedLeague = await League.findOneAndUpdate(
           { _id: args._id },
           args
@@ -167,7 +171,7 @@ const resolvers = {
       );
     },
     deleteLeague: async (parent, args, contextValue) => {
-      if (contextValue.user.role.includes('admin')) {
+      if (contextValue.user.role.includes("admin")) {
         const league = await League.findByIdAndDelete({ _id: args._id });
         await User.findByIdAndUpdate(
           { _id: contextValue.admin._id },
@@ -181,7 +185,7 @@ const resolvers = {
       );
     },
     createTeamMembers: async (parent, args, contextValue) => {
-      if (contextValue.user.role.includes('admin')) {
+      if (contextValue.user.role.includes("admin")) {
         const teamMember = await TeamMember.create(args);
 
         const userData = await User.findByIdAndUpdate(
@@ -197,7 +201,7 @@ const resolvers = {
       );
     },
     updateTeamMember: async (parent, args, contextValue) => {
-      if (contextValue.user.role.includes('admin')) {
+      if (contextValue.user.role.includes("admin")) {
         const updatedTeamMember = await TeamMember.findOneAndUpdate(
           { _id: args._id },
           args
@@ -216,7 +220,7 @@ const resolvers = {
       );
     },
     deleteTeamMember: async (parent, args, contextValue) => {
-      if (contextValue.user.role.includes('admin')) {
+      if (contextValue.user.role.includes("admin")) {
         const teamMember = await TeamMember.findByIdAndDelete({
           _id: args._id,
         });
