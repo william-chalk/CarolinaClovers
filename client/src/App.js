@@ -3,9 +3,10 @@ import {
   ApolloClient,
   InMemoryCache,
   ApolloProvider,
-  createHttpLink,ApolloLink
+  createHttpLink,
+  ApolloLink,
 } from "@apollo/client";
-import {onError} from "apollo-link-error";
+import { onError } from "apollo-link-error";
 import { setContext } from "@apollo/client/link/context";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { CookiesProvider } from "react-cookie";
@@ -28,19 +29,18 @@ import LoginForm from "./pages/Login";
 import Signup from "./pages/Signup";
 import LeaguePage from "./pages/LeaguePage";
 import NotFound from "./pages/NotFound";
-import AddAnnounce from './pages/AddAnnounce';
-import AddLeague from './pages/AddLeague';
-import AddMember from './pages/AddMember';
+import AddAnnounce from "./pages/AddAnnounce";
+import AddLeague from "./pages/AddLeague";
+import AddMember from "./pages/AddMember";
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
-    console.log('graphQLErrors', graphQLErrors);
+    console.log("graphQLErrors", graphQLErrors);
   }
   if (networkError) {
-    console.log('networkError', networkError);
+    console.log("networkError", networkError);
   }
 });
-
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -57,13 +57,13 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
-const clientLink = authLink.concat(httpLink)
+const clientLink = authLink.concat(httpLink);
 
 const link = ApolloLink.from([errorLink, clientLink]);
 
-
 const client = new ApolloClient({
   link,
+  // link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 });
 
@@ -99,9 +99,12 @@ function App() {
                   <Route path="/head-coaches" element={<HeadCoaches />} />
                   <Route path="/leagues" element={<LeaguePage />} />
                   <Route path="/admin" element={<Admin />} />
-                  <Route path="/admin/add-announcement" element={<AddAnnounce/>}/>
-                  <Route path="/admin/add-league" element={<AddLeague/>}/>
-                  <Route path="/admin/add-member" element={<AddMember/>}/>
+                  <Route
+                    path="/admin/add-announcement"
+                    element={<AddAnnounce />}
+                  />
+                  <Route path="/admin/add-league" element={<AddLeague />} />
+                  <Route path="/admin/add-member" element={<AddMember />} />
                   <Route path="/login" element={<LoginForm />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>

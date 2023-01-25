@@ -1,7 +1,7 @@
 const { AuthenticationError } = require("apollo-server-express");
 const omit = require("lodash.omit");
 
-const { User, TeamMember, Announcements, League } = require("../models");
+const { User, TeamMember, Announcement, League } = require("../models");
 
 const { signToken } = require("../utils/auth");
 
@@ -39,15 +39,13 @@ const resolvers = {
       throw new AuthenticationError("No players found!");
     },
     getAnnouncements: async (parent, args, context) => {
-      if (context.announcements) {
-        const announcements = await Announcements.find();
-        return announcements;
-      }
+      const announcements = await Announcement.find();
+      return announcements;
 
       throw new AuthenticationError("No announcements found!");
     },
     getAnnouncementById: async (parent, { _id }) => {
-      const announcement = await Announcements.findOne({ _id });
+      const announcement = await Announcement.findOne({ _id });
       if (!announcement) {
         throw new AuthenticationError("Annoucement not found with this id!");
       }
@@ -100,7 +98,7 @@ const resolvers = {
     },
     createAnnouncement: async (parent, args, contextValue) => {
       if (contextValue.user.role.includes("admin")) {
-        const announcement = await Announcements.create(args);
+        const announcement = await Announcement.create(args);
 
         const userData = await User.findByIdAndUpdate(
           { _id: contextValue.user._id },
@@ -117,7 +115,7 @@ const resolvers = {
     },
     updateAnnouncement: async (parent, args, contextValue) => {
       if (contextValue.user.role.includes("admin")) {
-        const updatedAnnouncement = await Announcements.findOneAndUpdate(
+        const updatedAnnouncement = await Announcement.findOneAndUpdate(
           { _id: args._id },
           args
         );
