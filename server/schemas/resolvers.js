@@ -30,8 +30,12 @@ const resolvers = {
       }
       return league;
     },
+    getLeagues: async (parent, args, context) => {
+      const leagues = await League.find();
+      return leagues;
+    },
     getPlayers: async (parent, args, context) => {
-      if (context.players) {
+      if (context.user) {
         const players = await TeamMember.find();
 
         return players;
