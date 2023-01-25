@@ -75,6 +75,7 @@ const typeDefs = gql`
       lastName: String!
       playerNumber: String!
       playerPosition: String!
+      playerLeague: String!
     ): TeamMember
     updateTeamMember(
       _id: ID!

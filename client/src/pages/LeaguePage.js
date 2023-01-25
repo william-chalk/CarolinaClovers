@@ -8,7 +8,7 @@ const LeaguePage = () => {
   const activeLeagues = data?.getLeagues || [];
 
   console.log(data);
-
+  console.log()
   return (
     <div>
       {activeLeagues.map((league) => (

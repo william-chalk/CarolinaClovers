@@ -19,11 +19,11 @@ function AddMember() {
 
   const listLeagues = data?.getLeagues || [];
 
-  console.log(listLeagues);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [playerPosition, setPlayerPosition] = useState("");
   const [playerNumber, setPlayerNumber] = useState("0");
+  const [playerLeague,setPlayerLeague] = useState(listLeagues[0]);
 
   const [addPlayer] = useMutation(ADD_PLAYERS, {
     update(cache, { data: { addPlayer } }) {
@@ -60,6 +60,7 @@ function AddMember() {
           lastName,
           playerPosition,
           playerNumber,
+          playerLeague
         },
       });
 
@@ -116,10 +117,11 @@ function AddMember() {
               <>
                 <Form.Group className="mb-3" controlId="teamMemberLeague">
                   <Form.Label>Player League</Form.Label>
-                  <select>
+                  <select name="playerLeague" value={playerLeague} onChange={(e) => setPlayerLeague(e.target.value)}>
+                    <option selected={true} disabled={true}>Pick a League</option>
                     {listLeagues.map((leagues) => (
                       <>
-                        <option value={leagues.leagueName}>
+                        <option key={"f" + leagues._id} value={leagues._id}>
                           {leagues.leagueName}
                         </option>
                       </>

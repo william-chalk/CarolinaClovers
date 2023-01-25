@@ -192,6 +192,12 @@ const resolvers = {
           { $push: { createdTeamMembers: teamMember._id } },
           { new: true }
         );
+          console.log(args);
+        await League.findByIdAndUpdate(
+          {_id:args.playerLeague},
+          {$push:{leaguePlayers:teamMember._id}},
+          {new:true}
+        )
         return teamMember;
       }
       console.log(contextValue.user.role);
