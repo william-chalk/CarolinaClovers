@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Container, Form, Button, Alert } from "react-bootstrap";
-import { useMutation } from "@apollo/client";
+import { Container, Form, Button, Alert, Dropdown } from "react-bootstrap";
+import { useMutation, useQuery } from "@apollo/client";
 import { ADD_PLAYERS } from "../graphql/mutations";
 
-import { QUERY_USER, QUERY_PLAYERS } from "../graphql/queries";
+import { QUERY_USER, QUERY_PLAYERS, QUERY_LEAGUES } from "../graphql/queries";
 
 import Auth from "../context/auth";
 
@@ -14,6 +14,12 @@ function AddMember() {
   //   playerPosition: "",
   //   playerNumber: 0,
   // });
+
+  const { loading, data } = useQuery(QUERY_LEAGUES);
+
+  const listLeagues = data?.getLeagues || [];
+
+  console.log(listLeagues);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [playerPosition, setPlayerPosition] = useState("");
@@ -107,6 +113,21 @@ function AddMember() {
                   onChange={(e) => setPlayerNumber(e.target.value)}
                 />
               </Form.Group>
+              <>
+                <Form.Group className="mb-3" controlId="teamMemberLeague">
+                  <Form.Label>Player League</Form.Label>
+                  <select>
+                    {listLeagues.map((leagues) => (
+                      <>
+                        <option value={leagues.leagueName}>
+                          {leagues.leagueName}
+                        </option>
+                      </>
+                    ))}
+                  </select>
+                </Form.Group>
+              </>
+
               <Button
                 onClick={handleMemberSubmit}
                 type="submit"
