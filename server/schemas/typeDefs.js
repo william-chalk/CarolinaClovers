@@ -30,7 +30,7 @@ const typeDefs = gql`
     lastName: String
     playerNumber: String
     playerPosition: String
-    playerLeague: [League]
+    playerLeague: League
   }
 
   type Auth {
@@ -75,7 +75,7 @@ const typeDefs = gql`
       lastName: String!
       playerNumber: String!
       playerPosition: String!
-      playerLeague: String!
+      playerLeague: ID!
     ): TeamMember
     updateTeamMember(
       _id: ID!
@@ -83,7 +83,7 @@ const typeDefs = gql`
       lastName: String!
       playerNumber: String!
       playerPosition: String!
-      playerLeague: String!
+      playerLeague: ID!
     ): TeamMember
     deleteTeamMember: TeamMember
   }

@@ -7,7 +7,7 @@ const LeaguePage = () => {
 
   const activeLeagues = data?.getLeagues || [];
 
-  console.log(data);
+  console.log(activeLeagues);
   console.log()
   return (
     <div>
