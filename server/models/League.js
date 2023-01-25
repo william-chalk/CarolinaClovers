@@ -1,4 +1,5 @@
 const { Schema, model } = require("mongoose");
+const TeamMember = require('./TeamMembers');
 
 const teamLeague = new Schema({
   leagueName: {
@@ -7,10 +8,11 @@ const teamLeague = new Schema({
     trim: true,
     unique: true
   },
-  leaguePlayers: {
-    type: Schema.Types.ObjectId,
-    ref: "TeamMember",
-  },
+  leaguePlayers: [TeamMember],
+},{
+  toJSON:{
+    getters:true
+  }
 });
 
 const League = model("League", teamLeague);

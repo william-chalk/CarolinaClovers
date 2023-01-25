@@ -23,6 +23,10 @@ const teamMemberSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "League",
   },
+},{
+  toJSON:{
+    getters:true
+  }
 });
 
 const TeamMember = model("TeamMember", teamMemberSchema);
