@@ -1,44 +1,48 @@
 const { Schema, model } = require("mongoose");
 const bycrypt = require("bcrypt");
 
-const userSchema = new Schema({
-  username: {
-    type: String,
-    required: true,
-    trim: true,
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    match: [/.+@.+\..+/, "Must match an email address!"],
-  },
-  password: {
-    type: String,
-    required: true,
-    minLength: 7,
-  },
-  role:{
-    type:String,
-    default:"user"
-  },
-  announcements: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Announcements",
+const userSchema = new Schema(
+  {
+    username: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
     },
-  ],
-  createdLeagues:[
-    {
-      type:Schema.Types.ObjectId,
-      ref: "League"
-    }
-  ]
-},{
-  toJSON:{
-    getters:true
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      match: [/.+@.+\..+/, "Must match an email address!"],
+    },
+    password: {
+      type: String,
+      required: true,
+      minLength: 7,
+    },
+    role: {
+      type: String,
+      default: "user",
+    },
+    announcements: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Announcement",
+      },
+    ],
+    createdLeagues: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "League",
+      },
+    ],
+  },
+  {
+    toJSON: {
+      getters: true,
+    },
   }
-});
+);
 
 userSchema.pre("save", async function (next) {
   if (this.isNew || this.isModified("password")) {

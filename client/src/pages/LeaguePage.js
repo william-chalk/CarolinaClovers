@@ -8,12 +8,12 @@ const LeaguePage = () => {
   const activeLeagues = data?.getLeagues || [];
 
   console.log(activeLeagues);
-  console.log()
   return (
     <div>
       {activeLeagues.map((league) => (
         <div key={league._id}>
           <p>{league.leagueName}</p>
+          {/* <p>{league.leaguePlayers.firstName}</p> */}
         </div>
       ))}
     </div>

@@ -1,19 +1,25 @@
 const { Schema, model } = require("mongoose");
-const TeamMember = require('./TeamMembers');
+const TeamMember = require("./TeamMembers");
 
-const teamLeague = new Schema({
-  leagueName: {
-    type: String,
-    required: true,
-    trim: true,
-    unique: true
+const teamLeague = new Schema(
+  {
+    leagueName: {
+      type: String,
+      required: true,
+      trim: true,
+      unique: true,
+    },
+    leaguePlayers: {
+      type: Schema.Types.ObjectId,
+      ref: "TeamMember",
+    },
   },
-  leaguePlayers: [TeamMember],
-},{
-  toJSON:{
-    getters:true
+  {
+    toJSON: {
+      getters: true,
+    },
   }
-});
+);
 
 const League = model("League", teamLeague);
 

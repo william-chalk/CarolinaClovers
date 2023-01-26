@@ -30,7 +30,6 @@ const typeDefs = gql`
     lastName: String
     playerNumber: String
     playerPosition: String
-    playerLeague: League
   }
 
   type Auth {
@@ -40,8 +39,7 @@ const typeDefs = gql`
 
   type Query {
     getLeagueById(_id: ID!): League
-    getLeagues: [League]
-    getPlayersByLeague(leagueName: String!): [TeamMember]
+    getLeagues: League
     getPlayers(firstName: String, lastName: String): [TeamMember]
     getUsers: [User]
     getAnnouncements: [Announcement]
@@ -75,7 +73,7 @@ const typeDefs = gql`
       lastName: String!
       playerNumber: String!
       playerPosition: String!
-      playerLeague: ID!
+      playerLeague: String!
     ): TeamMember
     updateTeamMember(
       _id: ID!
@@ -83,7 +81,7 @@ const typeDefs = gql`
       lastName: String!
       playerNumber: String!
       playerPosition: String!
-      playerLeague: ID!
+      playerLeague: String!
     ): TeamMember
     deleteTeamMember: TeamMember
   }

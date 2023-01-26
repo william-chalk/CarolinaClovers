@@ -15,14 +15,6 @@ const resolvers = {
 
       return user;
     },
-    getPlayersByLeague: async (parent, { leagueName }) => {
-      const players = await League.find({ leagueName });
-
-      if (!players) {
-        throw new AuthenticationError("No players found in this league");
-      }
-      return players;
-    },
     getLeagueById: async (parent, { _id }) => {
       const league = await League.findOne({ _id });
       if (!league) {
@@ -182,22 +174,40 @@ const resolvers = {
         "You must be an admin to perform this action!"
       );
     },
-    createTeamMembers: async (parent, args, contextValue) => {
+    createTeamMembers: async (
+      parent,
+      { leagueId, firstName, lastName, playerPosition, playerNumber },
+      contextValue
+    ) => {
       console.log(contextValue.user.role);
       if (contextValue.user.role.includes("admin")) {
         const teamMember = await TeamMember.create(args);
 
         await User.findByIdAndUpdate(
           { _id: contextValue.user._id },
-          { $push: { createdTeamMembers: teamMember._id } },
+          {
+            $push: {
+              createdTeamMembers: firstName,
+              lastName,
+              playerPosition,
+              playerNumber,
+            },
+          },
           { new: true }
         );
-          console.log(args);
+        console.log(args);
         await League.findByIdAndUpdate(
-          {_id:args.playerLeague},
-          {$push:{leaguePlayers:teamMember._id}},
-          {new:true}
-        )
+          { _id: leagueId },
+          {
+            $push: {
+              leaguePlayers: firstName,
+              lastName,
+              playerPosition,
+              playerNumber,
+            },
+          },
+          { new: true }
+        );
         return teamMember;
       }
       console.log(contextValue.user.role);
