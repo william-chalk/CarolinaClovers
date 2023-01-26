@@ -19,48 +19,49 @@ function AddMember() {
 
   const listLeagues = data?.getLeagues || [];
 
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [playerPosition, setPlayerPosition] = useState("");
-  const [playerNumber, setPlayerNumber] = useState("0");
-  const [playerLeague,setPlayerLeague] = useState(listLeagues[0]);
-
-  const [addPlayer] = useMutation(ADD_PLAYERS, {
-    update(cache, { data: { addPlayer } }) {
-      try {
-        const { getUsers } = cache.readQuery({ query: QUERY_USER });
-        cache.writeQuery({
-          query: QUERY_USER,
-          data: {
-            createdTeamMembers: {
-              ...getUsers,
-              createdTeamMembers: [...getUsers?.createdTeamMembers, addPlayer],
-            },
-          },
-        });
-      } catch (e) {
-        console.log("Caught here");
-        console.warn(e);
-      }
-
-      // const { teamMembers } = cache.readQuery({ query: QUERY_PLAYERS });
-      // cache.writeQuery({
-      //   query: QUERY_PLAYERS,
-      //   data: { teamMembers: [addPlayer, ...teamMembers] },
-      // });
-    },
+  const [formData,setFormData]=useState({
+    firstName:"",
+    lastName:"",
+    playerPosition:"",
+    playerNumber:0
   });
+  const [leagueId,setLeagueId] = useState(listLeagues[0]);
+  const [addPlayer] = useMutation(ADD_PLAYERS)
+  // const [addPlayer] = useMutation(ADD_PLAYERS, {
+  //   update(cache, { data: { addPlayer } }) {
+  //     try {
+  //       const { getUsers } = cache.readQuery({ query: QUERY_USER });
+  //       cache.writeQuery({
+  //         query: QUERY_USER,
+  //         data: {
+  //           createdTeamMembers: {
+  //             ...getUsers,
+  //             createdTeamMembers: [...getUsers?.createdTeamMembers, addPlayer],
+  //           },
+  //         },
+  //       });
+  //     } catch (e) {
+  //       console.log("Caught here");
+  //       console.warn(e);
+  //     }
+
+  //     // const { teamMembers } = cache.readQuery({ query: QUERY_PLAYERS });
+  //     // cache.writeQuery({
+  //     //   query: QUERY_PLAYERS,
+  //     //   data: { teamMembers: [addPlayer, ...teamMembers] },
+  //     // });
+  //   },
+  // });
 
   const handleMemberSubmit = async (event) => {
     event.preventDefault();
+    console.log(formData,leagueId);
     try {
       await addPlayer({
         variables: {
-          firstName,
-          lastName,
-          playerPosition,
-          playerNumber,
-          playerLeague
+          
+          ...formData,leagueId
+          
         },
       });
 
@@ -84,7 +85,7 @@ function AddMember() {
                   type="text"
                   placeholder="First Name"
                   name="firstName"
-                  onChange={(e) => setFirstName(e.target.value)}
+                  onChange={(e) => setFormData({...formData,[e.target.name]:e.target.value})}
                 />
               </Form.Group>
               <Form.Group className="mb-3" controlId="teamMemberLastName">
@@ -93,7 +94,7 @@ function AddMember() {
                   type="text"
                   placeholder="Last Name"
                   name="lastName"
-                  onChange={(e) => setLastName(e.target.value)}
+                  onChange={(e) => setFormData({...formData,[e.target.name]:e.target.value})}
                 />
               </Form.Group>
               <Form.Group className="mb-3" controlId="teamMemberPosition">
@@ -102,7 +103,7 @@ function AddMember() {
                   type="text"
                   placeholder="Player Position"
                   name="playerPosition"
-                  onChange={(e) => setPlayerPosition(e.target.value)}
+                  onChange={(e) => setFormData({...formData,[e.target.name]:e.target.value})}
                 />
               </Form.Group>
               <Form.Group className="mb-3" controlId="teamMemberNumber">
@@ -111,13 +112,13 @@ function AddMember() {
                   type="number"
                   placeholder="Player Number"
                   name="playerNumber"
-                  onChange={(e) => setPlayerNumber(e.target.value)}
+                  onChange={(e) => setFormData({...formData,[e.target.name]:e.target.value})}
                 />
               </Form.Group>
               <>
                 <Form.Group className="mb-3" controlId="teamMemberLeague">
                   <Form.Label>Player League</Form.Label>
-                  <select name="playerLeague" value={playerLeague} onChange={(e) => setPlayerLeague(e.target.value)}>
+                  <select name="leagueId" value={leagueId} onChange={(e) => setLeagueId(e.target.value)}>
                     <option selected={true} disabled={true}>Pick a League</option>
                     {listLeagues.map((leagues) => (
                       <>

@@ -47,10 +47,6 @@ export const QUERY_PLAYERS = gql`
       lastName
       playerNumber
       playerPosition
-      playerLeague {
-        _id
-        leagueName
-      }
     }
   }
 `;

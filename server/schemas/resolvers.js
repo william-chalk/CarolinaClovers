@@ -1,7 +1,7 @@
 const { AuthenticationError } = require("apollo-server-express");
 const omit = require("lodash.omit");
 
-const { User, TeamMember, Announcement, League } = require("../models");
+const { User, Announcement, League } = require("../models");
 
 const { signToken } = require("../utils/auth");
 
@@ -26,19 +26,9 @@ const resolvers = {
       const leagues = await League.find();
       return leagues;
     },
-    getPlayers: async (parent, args, context) => {
-      if (context.user) {
-        const players = await TeamMember.find();
-
-        return players;
-      }
-      throw new AuthenticationError("No players found!");
-    },
     getAnnouncements: async (parent, args, context) => {
       const announcements = await Announcement.find();
       return announcements;
-
-      throw new AuthenticationError("No announcements found!");
     },
     getAnnouncementById: async (parent, { _id }) => {
       const announcement = await Announcement.findOne({ _id });
@@ -174,77 +164,24 @@ const resolvers = {
         "You must be an admin to perform this action!"
       );
     },
-    createTeamMembers: async (
-      parent,
-      { leagueId, firstName, lastName, playerPosition, playerNumber },
-      contextValue
-    ) => {
-      console.log(contextValue.user.role);
+    addTeamMember: async (parent, { leagueId, formData }, contextValue) => {
       if (contextValue.user.role.includes("admin")) {
         const teamMember = await TeamMember.create(args);
 
         await User.findByIdAndUpdate(
           { _id: contextValue.user._id },
-          {
-            $push: {
-              createdTeamMembers: firstName,
-              lastName,
-              playerPosition,
-              playerNumber,
-            },
-          },
+          { $push: { createdTeamMembers: teamMember._id } },
           { new: true }
         );
         console.log(args);
         await League.findByIdAndUpdate(
-          { _id: leagueId },
-          {
-            $push: {
-              leaguePlayers: firstName,
-              lastName,
-              playerPosition,
-              playerNumber,
-            },
-          },
+          { _id: args.playerLeague },
+          { $push: { leaguePlayers: teamMember._id } },
           { new: true }
         );
         return teamMember;
       }
       console.log(contextValue.user.role);
-      throw new AuthenticationError(
-        "You must be an admin to perform this action!"
-      );
-    },
-    updateTeamMember: async (parent, args, contextValue) => {
-      if (contextValue.user.role.includes("admin")) {
-        const updatedTeamMember = await TeamMember.findOneAndUpdate(
-          { _id: args._id },
-          args
-        );
-
-        await User.findByIdAndUpdate(
-          { _id: contextValue.user._id },
-          { $addToSet: { createdTeamMembers: args._id } },
-          { new: true }
-        );
-
-        return updatedTeamMember;
-      }
-      throw new AuthenticationError(
-        "You must be an admin to perform this action!"
-      );
-    },
-    deleteTeamMember: async (parent, args, contextValue) => {
-      if (contextValue.user.role.includes("admin")) {
-        const teamMember = await TeamMember.findByIdAndDelete({
-          _id: args._id,
-        });
-        await User.findByIdAndUpdate(
-          { _id: contextValue.user._id },
-          { $pull: { createdTeamMembers: teamMember._id } }
-        );
-        return teamMember;
-      }
       throw new AuthenticationError(
         "You must be an admin to perform this action!"
       );

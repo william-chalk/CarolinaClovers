@@ -6,7 +6,6 @@ const userSchema = new Schema(
     username: {
       type: String,
       required: true,
-      unique: true,
       trim: true,
     },
     email: {
@@ -27,7 +26,7 @@ const userSchema = new Schema(
     announcements: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Announcement",
+        ref: "Announcements",
       },
     ],
     createdLeagues: [

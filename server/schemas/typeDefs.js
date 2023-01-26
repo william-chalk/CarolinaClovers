@@ -21,6 +21,7 @@ const typeDefs = gql`
   type League {
     _id: ID
     leagueName: String
+    playerCount: Int
     leaguePlayers: [TeamMember]
   }
 
@@ -68,22 +69,13 @@ const typeDefs = gql`
     createLeague(leagueName: String!): League
     updateLeague(leagueName: String!): League
     deleteLeague: League
-    createTeamMembers(
+    addTeamMember(
+      leagueId: ID!
       firstName: String!
       lastName: String!
-      playerNumber: String!
       playerPosition: String!
-      playerLeague: String!
-    ): TeamMember
-    updateTeamMember(
-      _id: ID!
-      firstName: String!
-      lastName: String!
       playerNumber: String!
-      playerPosition: String!
-      playerLeague: String!
-    ): TeamMember
-    deleteTeamMember: TeamMember
+    ): League
   }
 `;
 
