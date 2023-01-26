@@ -1,5 +1,5 @@
 const { Schema, model } = require("mongoose");
-const TeamMember = require('./TeamMembers');
+const teamMemberSchema = require('./TeamMembers');
 
 const teamLeague = new Schema({
   leagueName: {
@@ -8,12 +8,12 @@ const teamLeague = new Schema({
     trim: true,
     unique: true
   },
-  leaguePlayers: [TeamMember],
-},{
-  toJSON:{
-    getters:true
-  }
+  leaguePlayers:[teamMemberSchema]
 });
+
+teamLeague.virtual('playerCount').get(function(){
+  return this.leaguePlayers.length;
+})
 
 const League = model("League", teamLeague);
 

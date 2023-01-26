@@ -19,16 +19,8 @@ const teamMemberSchema = new Schema({
     type: String,
     required: true,
   },
-  playerLeague: {
-    type: Schema.Types.ObjectId,
-    ref: "League",
-  },
-},{
-  toJSON:{
-    getters:true
-  }
 });
 
-const TeamMember = model("TeamMember", teamMemberSchema);
 
-module.exports = TeamMember;
+
+module.exports = teamMemberSchema;

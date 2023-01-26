@@ -34,10 +34,6 @@ const userSchema = new Schema({
       ref: "League"
     }
   ]
-},{
-  toJSON:{
-    getters:true
-  }
 });
 
 userSchema.pre("save", async function (next) {
