@@ -51,21 +51,6 @@ export const QUERY_PLAYERS = gql`
   }
 `;
 
-export const QUERY_PLAYERS_BY_LEAGUE = gql`
-  query getPlayersByLeague($leagueName: String!) {
-    getPlayersByLeague(leagueName: $leagueName) {
-      _id
-      firstName
-      lastName
-      playerNumber
-      playerPosition
-      playerLeague {
-        _id
-        leagueName
-      }
-    }
-  }
-`;
 
 export const QUERY_ANNOUNCEMENTS = gql`
   query getAnnouncements {

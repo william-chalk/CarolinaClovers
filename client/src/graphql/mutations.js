@@ -50,13 +50,16 @@ export const ADD_LEAGUE = gql`
   }
 `;
 export const ADD_PLAYERS = gql`
-  mutation addTeamMember($firstName: String!, $lastName: String!, $playerNumber: String!,$playerPosition: String!,$leagueId:ID!) {
-    addTeamMember(firstName: $firstName,lastName: $lastName,playerNumber: $playerNumber,playerPosition: $playerPosition,leagueId:$leagueId) {
+  mutation addTeammate($firstName: String!, $lastName: String!, $playerNumber: String!,$playerPosition: String!,$leagueId:ID!) {
+    addTeammate(firstName: $firstName,lastName: $lastName,playerNumber: $playerNumber,playerPosition: $playerPosition,leagueId:$leagueId) {
       _id
-      firstName
-      lastName
-      playerNumber
-      playerPosition
+      leagueName
+      leaguePlayers{
+        firstName
+        lastName
+        playerPosition
+        playerNumber
+      }
     }
   }
 `;

@@ -37,15 +37,17 @@ const typeDefs = gql`
   }
 
   type Query {
-    users: [User]
+    getUsers: [User]
     getLeagues: [League]
-    getPlayers: [TeamMember]
+    getLeagueById:League
+    getAnnouncements:[Announcement]
+    getAnnouncementById:Announcement
   }
 
   type Mutation {
     login(email: String!, password: String!): Auth
-    addUser(username: String!, email: String!, password: String!): Auth
-    addLeague(leagueName: String!): League
+    createUser(username: String!, email: String!, password: String!): Auth
+    createLeague(leagueName: String!): League
     addTeammate(
       leagueId: ID!
       firstName: String!
@@ -53,7 +55,7 @@ const typeDefs = gql`
       playerPosition: String!
       playerNumber: String!
     ): League
-    addAnnouncement(
+    createAnnouncement(
       announcementTitle: String!
       announcementBody: String!
     ): Announcement
