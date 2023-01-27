@@ -94,13 +94,13 @@ const resolvers = {
         "You must be an admin to perform this action!"
       );
     },
-    addTeammate: async (parent, { leagueId, formData }, contextValue) => {
+    addTeammate: async (parent, { leagueId, firstName,lastName,playerPosition,playerNumber }, contextValue) => {
       if (contextValue.user.role.includes("admin")) {
           const addMember = await League.findOneAndUpdate(
             {_id:leagueId},
             {
               $push:{
-                leaguePlayers:{...formData}
+                leaguePlayers:{firstName,lastName,playerPosition,playerNumber}
               }
             },
             {new:true}
