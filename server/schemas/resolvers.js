@@ -175,8 +175,8 @@ const resolvers = {
         );
         console.log(args);
         await League.findByIdAndUpdate(
-          { _id: args.playerLeague },
-          { $push: { leaguePlayers: teamMember._id } },
+          { _id: leagueId },
+          { $push: { leaguePlayers: formData } },
           { new: true }
         );
         return teamMember;

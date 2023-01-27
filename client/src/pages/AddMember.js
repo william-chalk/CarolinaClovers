@@ -18,15 +18,15 @@ function AddMember() {
   const { loading, data } = useQuery(QUERY_LEAGUES);
 
   const listLeagues = data?.getLeagues || [];
-
-  const [formData,setFormData]=useState({
-    firstName:"",
-    lastName:"",
-    playerPosition:"",
-    playerNumber:0
+  console.log(listLeagues);
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    playerPosition: "",
+    playerNumber: 0,
   });
-  const [leagueId,setLeagueId] = useState(listLeagues[0]);
-  const [addPlayer] = useMutation(ADD_PLAYERS)
+  const [leagueId, setLeagueId] = useState(listLeagues[0]);
+  const [addPlayer] = useMutation(ADD_PLAYERS);
   // const [addPlayer] = useMutation(ADD_PLAYERS, {
   //   update(cache, { data: { addPlayer } }) {
   //     try {
@@ -55,13 +55,12 @@ function AddMember() {
 
   const handleMemberSubmit = async (event) => {
     event.preventDefault();
-    console.log(formData,leagueId);
+    console.log(formData, leagueId);
     try {
       await addPlayer({
         variables: {
-          
-          ...formData,leagueId
-          
+          ...formData,
+          leagueId,
         },
       });
 
@@ -85,7 +84,12 @@ function AddMember() {
                   type="text"
                   placeholder="First Name"
                   name="firstName"
-                  onChange={(e) => setFormData({...formData,[e.target.name]:e.target.value})}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      [e.target.name]: e.target.value,
+                    })
+                  }
                 />
               </Form.Group>
               <Form.Group className="mb-3" controlId="teamMemberLastName">
@@ -94,7 +98,12 @@ function AddMember() {
                   type="text"
                   placeholder="Last Name"
                   name="lastName"
-                  onChange={(e) => setFormData({...formData,[e.target.name]:e.target.value})}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      [e.target.name]: e.target.value,
+                    })
+                  }
                 />
               </Form.Group>
               <Form.Group className="mb-3" controlId="teamMemberPosition">
@@ -103,7 +112,12 @@ function AddMember() {
                   type="text"
                   placeholder="Player Position"
                   name="playerPosition"
-                  onChange={(e) => setFormData({...formData,[e.target.name]:e.target.value})}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      [e.target.name]: e.target.value,
+                    })
+                  }
                 />
               </Form.Group>
               <Form.Group className="mb-3" controlId="teamMemberNumber">
@@ -112,14 +126,25 @@ function AddMember() {
                   type="number"
                   placeholder="Player Number"
                   name="playerNumber"
-                  onChange={(e) => setFormData({...formData,[e.target.name]:e.target.value})}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      [e.target.name]: e.target.value,
+                    })
+                  }
                 />
               </Form.Group>
               <>
                 <Form.Group className="mb-3" controlId="teamMemberLeague">
                   <Form.Label>Player League</Form.Label>
-                  <select name="leagueId" value={leagueId} onChange={(e) => setLeagueId(e.target.value)}>
-                    <option selected={true} disabled={true}>Pick a League</option>
+                  <select
+                    name="leagueId"
+                    value={leagueId}
+                    onChange={(e) => setLeagueId(e.target.value)}
+                  >
+                    <option selected={true} disabled={true}>
+                      Pick a League
+                    </option>
                     {listLeagues.map((leagues) => (
                       <>
                         <option key={"f" + leagues._id} value={leagues._id}>

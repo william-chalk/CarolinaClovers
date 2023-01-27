@@ -92,13 +92,6 @@ export const QUERY_LEAGUES = gql`
     getLeagues {
       _id
       leagueName
-      leaguePlayers {
-        _id
-        firstName
-        lastName
-        playerNumber
-        playerPosition
-      }
     }
   }
 `;

@@ -1,25 +1,19 @@
 const { Schema, model } = require("mongoose");
-const teamMemberSchema = require('./TeamMembers');
+const teamMemberSchema = require("./TeamMembers");
 
-const teamLeague = new Schema(
-  {
-    leagueName: {
-      type: String,
-      required: true,
-      trim: true,
-      unique: true,
-    },
-    leaguePlayers: {
-      type: Schema.Types.ObjectId,
-      ref: "TeamMember",
-    },
+const teamLeague = new Schema({
+  leagueName: {
+    type: String,
+    required: true,
+    trim: true,
+    unique: true,
   },
-  leaguePlayers:[teamMemberSchema]
+  leaguePlayers: [teamMemberSchema],
 });
 
-teamLeague.virtual('playerCount').get(function(){
+teamLeague.virtual("playerCount").get(function () {
   return this.leaguePlayers.length;
-})
+});
 
 const League = model("League", teamLeague);
 

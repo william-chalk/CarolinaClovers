@@ -5,12 +5,10 @@ const typeDefs = gql`
     _id: ID
     username: String
     email: String
-    password: String
     role: String
     isAuthenticated: Boolean
     announcements: [Announcement]
     createdLeagues: [League]
-    createdTeamMembers: [TeamMember]
   }
   type Announcement {
     _id: ID
@@ -39,43 +37,26 @@ const typeDefs = gql`
   }
 
   type Query {
-    getLeagueById(_id: ID!): League
-    getLeagues: League
-    getPlayers(firstName: String, lastName: String): [TeamMember]
-    getUsers: [User]
-    getAnnouncements: [Announcement]
-    getAnnouncementById(_id: ID!): Announcement
+    users: [User]
+    getLeagues: [League]
+    getPlayers: [TeamMember]
   }
 
   type Mutation {
-    createUser(username: String!, email: String!, password: String!): Auth
-    updateUser(
-      username: String!
-      email: String!
-      password: String!
-      role: String
-    ): User
-    deleteUser: User
     login(email: String!, password: String!): Auth
-    createAnnouncement(
-      announcementTitle: String!
-      announcementBody: String!
-    ): Announcement
-    updateAnnouncement(
-      _id: ID!
-      announcementTitle: String!
-      announcementBody: String!
-    ): Announcement
-    createLeague(leagueName: String!): League
-    updateLeague(leagueName: String!): League
-    deleteLeague: League
-    addTeamMember(
+    addUser(username: String!, email: String!, password: String!): Auth
+    addLeague(leagueName: String!): League
+    addTeammate(
       leagueId: ID!
       firstName: String!
       lastName: String!
       playerPosition: String!
       playerNumber: String!
     ): League
+    addAnnouncement(
+      announcementTitle: String!
+      announcementBody: String!
+    ): Announcement
   }
 `;
 

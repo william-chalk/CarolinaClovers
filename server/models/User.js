@@ -26,7 +26,7 @@ const userSchema = new Schema(
     announcements: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Announcements",
+        ref: "Announcement",
       },
     ],
     createdLeagues: [
@@ -38,7 +38,7 @@ const userSchema = new Schema(
   },
   {
     toJSON: {
-      getters: true,
+      virtuals: true,
     },
   }
 );
