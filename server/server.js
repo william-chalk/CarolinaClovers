@@ -31,7 +31,6 @@ app.get("*", (req, res) => {
 });
 
 const startApolloServer = async (typeDefs, resolvers) => {
-  db.dropDatabase();
   await server.start();
   server.applyMiddleware({ app });
   db.once("open", () => {
