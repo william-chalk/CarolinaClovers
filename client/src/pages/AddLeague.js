@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Container, Form, Button, Alert } from "react-bootstrap";
 import { useMutation } from "@apollo/client";
 import { ADD_LEAGUE } from "../graphql/mutations";
@@ -9,6 +10,7 @@ import Auth from "../context/auth";
 
 function AddLeague() {
   const [leagueName, setLeagueName] = useState("");
+  const navigate = useNavigate();
 
   const [addLeague] = useMutation(ADD_LEAGUE, {
     update(cache, { data: { addLeague } }) {
@@ -52,6 +54,8 @@ function AddLeague() {
 
       // clear form value
       setLeagueName("");
+      navigate("/admin");
+      window.location.reload();
     } catch (e) {
       console.error(e);
     }

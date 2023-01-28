@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Container, Form, Button, Alert, Dropdown } from "react-bootstrap";
 import { useMutation, useQuery } from "@apollo/client";
 import { ADD_PLAYERS } from "../graphql/mutations";
@@ -14,6 +15,8 @@ function AddMember() {
   //   playerPosition: "",
   //   playerNumber: 0,
   // });
+
+  const navigate = useNavigate();
 
   const { loading, data } = useQuery(QUERY_LEAGUES);
 
@@ -63,7 +66,8 @@ function AddMember() {
           leagueId,
         },
       });
-
+      navigate("/admin");
+      window.location.reload();
       // clear form value
     } catch (e) {
       console.log();

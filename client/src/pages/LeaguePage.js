@@ -13,6 +13,7 @@ const LeaguePage = () => {
       {activeLeagues.map((league) => (
         <div key={league._id}>
           <p>{league.leagueName}</p>
+          <p style={{ color: "white" }}>{league.leaguePlayers}</p>
           {/* <p>{league.leaguePlayers.firstName}</p> */}
         </div>
       ))}

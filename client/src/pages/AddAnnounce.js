@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Container, Form, Button, Alert } from "react-bootstrap";
 import { useMutation } from "@apollo/client";
 import { ADD_ANNOUNCEMENT } from "../graphql/mutations";
@@ -10,6 +11,8 @@ import Auth from "../context/auth";
 function AddAnounce() {
   const [announcementTitle, setAnnouncementTitle] = useState("");
   const [announcementBody, setAnnouncementBody] = useState("");
+
+  const navigate = useNavigate();
 
   const [addAnnouncement] = useMutation(ADD_ANNOUNCEMENT, {
     update(cache, { data: { addAnnouncement } }) {
@@ -42,7 +45,6 @@ function AddAnounce() {
     console.log(event.target.files[0]);
   };
 
-
   const handleAnnouncementSubmit = async (event) => {
     event.preventDefault();
 
@@ -57,6 +59,8 @@ function AddAnounce() {
       // clear form value
       setAnnouncementBody("");
       setAnnouncementTitle("");
+      navigate("/admin");
+      window.location.reload();
     } catch (e) {
       console.error(e);
     }
