@@ -7,13 +7,16 @@ const LeaguePage = () => {
 
   const activeLeagues = data?.getLeagues || [];
 
-  console.log(activeLeagues);
   return (
-    <div>
+    <div style={{ backgroundColor: "rgba(255,255,255,0.9)", height: "50vh" }}>
       {activeLeagues.map((league) => (
         <div key={league._id}>
-          <p>{league.leagueName}</p>
-          <p style={{ color: "white" }}>{league.leaguePlayers}</p>
+          <p key={"f" + league._id}>{league.leagueName}</p>
+          {league.leaguePlayers.map((activePlayers) => (
+            <div key={activePlayers._id}>
+              <p key={"f" + activePlayers._id}>{activePlayers.firstName}</p>
+            </div>
+          ))}
           {/* <p>{league.leaguePlayers.firstName}</p> */}
         </div>
       ))}
