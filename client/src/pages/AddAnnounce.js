@@ -67,7 +67,7 @@ function AddAnounce() {
   };
 
   return (
-    <div style={{ backgroundColor: "rgba(255,255,255,0.9)", height: "100%" }}>
+    <div>
       {Auth.loggedIn() ? (
         <Container>
           <>

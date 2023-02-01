@@ -32,6 +32,8 @@ import NotFound from "./pages/NotFound";
 import AddAnnounce from "./pages/AddAnnounce";
 import AddLeague from "./pages/AddLeague";
 import AddMember from "./pages/AddMember";
+import Footer from "./components/Footer";
+import Donate from "./pages/Donate";
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
@@ -71,13 +73,7 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <CookiesProvider>
-        <div
-          style={{
-            backgroundImage: `url(${background})`,
-            height: "100vh",
-            width: "auto",
-          }}
-        >
+        <div>
           <Container>
             <Router>
               <Header />
@@ -87,6 +83,7 @@ function App() {
                   <Route path="/" element={<HomePage />} />
                   <Route path="/sponsor" element={<SponsorUs />} />
                   <Route path="/our-purpose" element={<OurPurpose />} />
+                  <Route path="/donate" element={<Donate/>}/>
                   <Route
                     path="/message-to-parents"
                     element={<MessageToParents />}
@@ -97,7 +94,7 @@ function App() {
                   <Route path="/saftey" element={<Saftey />} />
                   <Route path="/contact-us" element={<ContactUs />} />
                   <Route path="/head-coaches" element={<HeadCoaches />} />
-                  <Route path="/leagues" element={<LeaguePage />} />
+                  <Route path="/teams" element={<LeaguePage />} />
                   <Route path="/admin" element={<Admin />} />
                   <Route
                     path="/admin/add-announcement"
@@ -112,6 +109,7 @@ function App() {
             </Router>
           </Container>
         </div>
+        <Footer/>
       </CookiesProvider>
     </ApolloProvider>
   );

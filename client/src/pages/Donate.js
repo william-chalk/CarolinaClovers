@@ -1,12 +1,12 @@
 import React from "react";
 
-function SponsorUs() {
+function Donate() {
   return (
     <div>
-      <h3>Sponsor Us!</h3>
+      <h3>Donate</h3>
       <p>Thank you for the support!</p>
     </div>
   );
 }
 
-export default SponsorUs;
+export default Donate;

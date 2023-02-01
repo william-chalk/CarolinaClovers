@@ -7,6 +7,7 @@
 //Document download links
 import { useQuery } from "@apollo/client";
 import React from "react";
+import { Container } from "react-bootstrap";
 import { QUERY_ANNOUNCEMENTS } from "../graphql/queries";
 
 function HomePage() {
@@ -16,7 +17,7 @@ function HomePage() {
 
   console.log(data);
   return (
-    <div style={{ backgroundColor: "rgba(255,255,255,0.9)", height: "50vh" }}>
+    <Container>
       <div
         id="carouselExampleSlidesOnly"
         className="carousel slide"
@@ -24,7 +25,7 @@ function HomePage() {
       >
         <div className="carousel-inner">
           <div className="carousel-item active">
-            <img className="d-block w-100" src="..." alt="First slide" />
+            <img className="d-block w-100" src="../assets/carolinaClovers.png" alt="First slide" />
           </div>
           <div className="carousel-item">
             <img className="d-block w-100" src="..." alt="Second slide" />
@@ -39,14 +40,16 @@ function HomePage() {
         <p>Carolina Clovers is a baseball team!</p>
       </div>
       <div>
+        <h4>Announcements</h4>
         {userAnnouncement.map((announcement) => (
           <div key={announcement._id}>
             <p>{announcement.announcementTitle}</p>
             <p>{announcement.announcementBody}</p>
+            <p>Posted On {announcement.createdAt}</p>
           </div>
         ))}
       </div>
-    </div>
+    </Container>
   );
 }
 
