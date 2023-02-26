@@ -7,7 +7,7 @@
 //Document download links
 import { useQuery } from "@apollo/client";
 import React from "react";
-import { Container } from "react-bootstrap";
+import { Container, Carousel } from "react-bootstrap";
 import { QUERY_ANNOUNCEMENTS } from "../graphql/queries";
 
 function HomePage() {
@@ -18,23 +18,45 @@ function HomePage() {
   console.log(data);
   return (
     <Container>
-      <div
-        id="carouselExampleSlidesOnly"
-        className="carousel slide"
-        data-ride="carousel"
-      >
-        <div className="carousel-inner">
-          <div className="carousel-item active">
-            <img className="d-block w-100" src="../assets/carolinaClovers.png" alt="First slide" />
-          </div>
-          <div className="carousel-item">
-            <img className="d-block w-100" src="..." alt="Second slide" />
-          </div>
-          <div className="carousel-item">
-            <img className="d-block w-100" src="..." alt="Third slide" />
-          </div>
-        </div>
-      </div>
+      <Carousel>
+        <Carousel.Item>
+          <img
+            className="d-block w-100"
+            src={require("../assets/Website Photos/carolinaClovers.png")}
+            alt="First slide"
+          />
+          <Carousel.Caption>
+            <h3>First slide label</h3>
+            <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+          </Carousel.Caption>
+        </Carousel.Item>
+        <Carousel.Item>
+          <img
+            className="d-block w-100"
+            src={require("../assets/Website Photos/carolinaClovers.png")}
+            alt="Second slide"
+          />
+
+          <Carousel.Caption>
+            <h3>Second slide label</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          </Carousel.Caption>
+        </Carousel.Item>
+        <Carousel.Item>
+          <img
+            className="d-block w-100"
+            src={require("../assets/Website Photos/website-background.jpg")}
+            alt="Third slide"
+          />
+
+          <Carousel.Caption>
+            <h3>Third slide label</h3>
+            <p>
+              Praesent commodo cursus magna, vel scelerisque nisl consectetur.
+            </p>
+          </Carousel.Caption>
+        </Carousel.Item>
+      </Carousel>
       <div>
         <h3>Welcome to our site!</h3>
         <p>Carolina Clovers is a baseball team!</p>
